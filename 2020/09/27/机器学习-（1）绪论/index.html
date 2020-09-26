@@ -16,19 +16,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="用bit来表示和操纵集合宽为w的bit向量可用于表示A&#x3D;\{0,\cdots,w-1\}的子集，j \in A 当且仅当 a_j&#x3D;1。 例如，01101001可表示{0, 3, 5, 6}；01010101可表示{0, 2, 4, 6}。 &amp;，｜，~可分别求集合的交、并、补集。 注：C++提供了bitset库用于管理一系列的bit位。 有符号数的计算公式 -x_{w-1}\cdot2^{w">
+  <meta name="description" content="机器学习是什么？机器学习主要研究关于在计算机上从数据中产生“模型”的算法，即学习算法。 有了学习算法，我们把经验数据提供给它，它就能基于这些数据产生模型，在面对新的情况时，模型会给我们提供相应的判断。 基本术语输入 样本 指对于一个事件或对象的描述。 这样的描述通常反映了事件或对象在某些方面的特征和表现。描述的每一项被称为属性。属性上的取值称为属性值。属性张成的空间被称为属性空间、样本空间或输入空">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSAPP 01 - Bits, Bytes and Integers">
-<meta property="og:url" content="http://yoursite.com/2020/06/28/CSAPP-01-Bits-Bytes-and-Integers/">
+<meta property="og:title" content="机器学习 （1）绪论">
+<meta property="og:url" content="http://yoursite.com/2020/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%EF%BC%881%EF%BC%89%E7%BB%AA%E8%AE%BA/">
 <meta property="og:site_name" content="Phantasia">
-<meta property="og:description" content="用bit来表示和操纵集合宽为w的bit向量可用于表示A&#x3D;\{0,\cdots,w-1\}的子集，j \in A 当且仅当 a_j&#x3D;1。 例如，01101001可表示{0, 3, 5, 6}；01010101可表示{0, 2, 4, 6}。 &amp;，｜，~可分别求集合的交、并、补集。 注：C++提供了bitset库用于管理一系列的bit位。 有符号数的计算公式 -x_{w-1}\cdot2^{w">
+<meta property="og:description" content="机器学习是什么？机器学习主要研究关于在计算机上从数据中产生“模型”的算法，即学习算法。 有了学习算法，我们把经验数据提供给它，它就能基于这些数据产生模型，在面对新的情况时，模型会给我们提供相应的判断。 基本术语输入 样本 指对于一个事件或对象的描述。 这样的描述通常反映了事件或对象在某些方面的特征和表现。描述的每一项被称为属性。属性上的取值称为属性值。属性张成的空间被称为属性空间、样本空间或输入空">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-06-28T15:07:41.000Z">
-<meta property="article:modified_time" content="2020-07-02T13:27:35.691Z">
+<meta property="article:published_time" content="2020-09-26T16:23:05.000Z">
+<meta property="article:modified_time" content="2020-09-26T16:25:04.414Z">
 <meta property="article:author" content="Xiao">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/06/28/CSAPP-01-Bits-Bytes-and-Integers/">
+<link rel="canonical" href="http://yoursite.com/2020/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%EF%BC%881%EF%BC%89%E7%BB%AA%E8%AE%BA/">
 
 
 <script id="page-configurations">
@@ -41,7 +42,7 @@
   };
 </script>
 
-  <title>CSAPP 01 - Bits, Bytes and Integers | Phantasia</title>
+  <title>机器学习 （1）绪论 | Phantasia</title>
   
 
 
@@ -157,7 +158,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/28/CSAPP-01-Bits-Bytes-and-Integers/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%EF%BC%881%EF%BC%89%E7%BB%AA%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -170,7 +171,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CSAPP 01 - Bits, Bytes and Integers
+          机器学习 （1）绪论
         </h1>
 
         <div class="post-meta">
@@ -179,16 +180,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-06-28 23:07:41" itemprop="dateCreated datePublished" datetime="2020-06-28T23:07:41+08:00">2020-06-28</time>
+              <time title="创建时间：2020-09-27 00:23:05 / 修改时间：00:25:04" itemprop="dateCreated datePublished" datetime="2020-09-27T00:23:05+08:00">2020-09-27</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-02 21:27:35" itemprop="dateModified" datetime="2020-07-02T21:27:35+08:00">2020-07-02</time>
-              </span>
 
           
 
@@ -201,53 +196,80 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="用bit来表示和操纵集合"><a href="#用bit来表示和操纵集合" class="headerlink" title="用bit来表示和操纵集合"></a>用bit来表示和操纵集合</h3><p>宽为<script type="math/tex">w</script>的bit向量可用于表示<script type="math/tex">A=\{0,\cdots,w-1\}</script>的子集，<script type="math/tex">j \in A</script> 当且仅当 <script type="math/tex">a_j=1</script>。</p>
-<p>例如，01101001可表示{0, 3, 5, 6}；01010101可表示{0, 2, 4, 6}。</p>
-<p>&amp;，｜，~可分别求集合的交、并、补集。</p>
-<p><strong>注：</strong>C++提供了bitset库用于管理一系列的bit位。</p>
-<h3 id="有符号数的计算公式"><a href="#有符号数的计算公式" class="headerlink" title="有符号数的计算公式"></a>有符号数的计算公式</h3><script type="math/tex; mode=display">
--x_{w-1}\cdot2^{w-1}+\sum_{i=0}^{w-2}x_i\cdot2^i</script><p>其中<script type="math/tex">w</script>是位宽，最高位第<script type="math/tex">w-1</script>是符号位。</p>
-<h3 id="C中的无符号数"><a href="#C中的无符号数" class="headerlink" title="C中的无符号数"></a>C中的无符号数</h3><ol>
-<li><p><strong>int和unsigned相互转换</strong></p>
-<p>保留bit模式，但根据符号位的不同含义重新翻译其值。</p>
-<p>int和unsigned出现在同一个表达式时，int会被隐式转换成unsigned，从而可能导致一些混乱。</p>
-<p>例如：</p>
-<p>-1 &lt; 0</p>
-<p>-1 &gt; 0U</p>
+        <h2 id="机器学习是什么？"><a href="#机器学习是什么？" class="headerlink" title="机器学习是什么？"></a>机器学习是什么？</h2><p>机器学习主要研究关于在计算机上从数据中产生“模型”的算法，即学习算法。</p>
+<p>有了学习算法，我们把经验数据提供给它，它就能基于这些数据产生模型，在面对新的情况时，模型会给我们提供相应的判断。</p>
+<h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><ul>
+<li><p><strong>样本</strong></p>
+<p>指对于一个事件或对象的描述。</p>
+<p>这样的描述通常反映了事件或对象在某些方面的特征和表现。描述的每一项被称为<strong>属性</strong>。属性上的取值称为<strong>属性值</strong>。属性张成的空间被称为<strong>属性空间、样本空间或输入空间</strong>。</p>
+<p> 对每个样本的描述通常由多个属性组成，属性的个数称为样本的<strong>维数</strong>。这些属性值可以表示为一个多维向量。因此一个样本也可被称为<strong>特征向量</strong>。每个特征向量都对应了样本空间中的一个点。</p>
 </li>
-<li><p><strong>一段危险的代码</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = cnt - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    a[i] = a[i + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
-<p>unsigned始终不小于0。当其等于0时，再进行一次自减将变成UINT_MAX，从而导致死循环。</p>
-<p>sizeof默认返回unsigned，在使用其返回值时同样应注意以上代码的问题。</p>
-<p>若想要使用unsigned作为循环索引，正确的姿势是：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = cnt - <span class="number">2</span>; i &lt; cnt; i--)</span><br><span class="line">    a[i] = a[i + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+<li><p><strong>数据集</strong></p>
+<p>多个样本的集合构成了一个<strong>数据集</strong>。</p>
 </li>
-</ol>
-<h3 id="有符号数的位扩展与截断"><a href="#有符号数的位扩展与截断" class="headerlink" title="有符号数的位扩展与截断"></a>有符号数的位扩展与截断</h3><ol>
-<li><p><strong>位扩展</strong></p>
-<p>用现有最高位填充所有扩展位。如short ➡️ int时会发生。</p>
+<li><p><strong>训练集、训练样本</strong></p>
+<p>模型训练过程中使用的数据集被称为<strong>训练集</strong>。训练集中的样本被称为<strong>训练样本</strong>。</p>
 </li>
-<li><p><strong>位截断</strong></p>
-<p>直接截去多余的位，可能出现正数变负数，负数变正数。如int ➡️ short时会发生。</p>
+<li><p><strong>样例</strong></p>
+<p>带有标记信息的样本被称为<strong>样例</strong>。一个样例通常可以用一个由特征向量和标记信息组成的二元组进行表示。</p>
 </li>
-</ol>
-<h3 id="移位计算"><a href="#移位计算" class="headerlink" title="移位计算"></a>移位计算</h3><ol>
-<li><strong>左移</strong><ul>
-<li>$u &lt;&lt; k = u * 2^k$</li>
-<li>对于有符号数和无符号数都适用</li>
+</ul>
+<h3 id="学习任务"><a href="#学习任务" class="headerlink" title="学习任务"></a>学习任务</h3><ul>
+<li><p><strong>分类</strong></p>
+<p>若我们要预测的是<strong>离散值</strong>，则该任务称为<strong>分类</strong>。</p>
+</li>
+<li><p><strong>回归</strong></p>
+<p>若我们要预测的是<strong>连续值</strong>，则该任务称为<strong>回归</strong>。</p>
+</li>
+<li><p><strong>聚类</strong></p>
+<p>将训练集中的样本分成若干个组，每组称为一个“簇”。这样的任务被称为<strong>聚类</strong>。</p>
+<p>聚类学习中使用的样本通常<strong>不拥有标记信息</strong>。</p>
+</li>
+<li><p><strong>监督学习、无监督学习</strong></p>
+<p>根据训练数据<strong>是否含有标记信息</strong>，学习任务可大致划分为<strong>监督学习</strong>和<strong>无监督学习</strong>。</p>
+<p>分类和回归是前者的代表。</p>
+<p>聚类是后者的代表。</p>
+</li>
+<li><p><strong>泛化</strong></p>
+<p>学得模型适用于新样本的能力被称为<strong>泛化能力</strong>。</p>
+</li>
+</ul>
+<h2 id="假设空间"><a href="#假设空间" class="headerlink" title="假设空间"></a>假设空间</h2><ul>
+<li><p><strong>归纳</strong></p>
+<p>从特殊到一般，即从具体事实归结出一般性规律。例如<strong>从样例中学习</strong>。</p>
+<p>从样例中学习又称为<strong>归纳学习</strong>。</p>
+<p>狭义的归纳学习要求从训练样本中学得概念，因此也称<strong>概念学习</strong>。</p>
+</li>
+<li><p><strong>演绎</strong></p>
+<p>从一般到特殊，即从基础原理推演出具体情况。例如<strong>数学证明</strong>。</p>
+</li>
+</ul>
+<p>学习过程可以看作一个在所有假设组成的空间中进行搜索的过程，搜索目标是找到与训练集匹配的假设。可能有多个假设与训练集一致，即存在一个与训练集一致的“假设集合”，称之为<strong>版本空间</strong>。</p>
+<h2 id="归纳偏好"><a href="#归纳偏好" class="headerlink" title="归纳偏好"></a>归纳偏好</h2><p><strong>通过学习得到的模型对应了假设空间中的一个假设</strong>。</p>
+<p>由于版本空间中可能存在多个满足训练集的假设，而这些假设在面临新样本时却有可能产生不同的输出。对于一个具体的学习算法而言，其本身的<strong>“偏好”</strong>将决定最终选择哪一个假设作为最终的模型。</p>
+<p><strong>“奥卡姆剃刀原则”</strong>是一种可以使用的偏好，即“若有多个假设与观察一致，则选择最简单的那个”。</p>
+<p>事实上，归纳偏好对应了学习算法本身所做出的关于“什么样的模型更好”的假设。</p>
+<p>NFL定理指出，<strong>当所有“问题”出现的机会相同、或所有问题同等重要时，不同学习算法的期望性能是相同的</strong>。</p>
+<p><strong>NFL定理最重要的寓意在于，当考虑学习算法时应和具体问题相联系</strong>。</p>
+<h2 id="人工智能的发展历程"><a href="#人工智能的发展历程" class="headerlink" title="人工智能的发展历程"></a>人工智能的发展历程</h2><ul>
+<li><p><strong>推理期</strong></p>
+<p>20世纪50年代-70年代初</p>
+<p>只要能赋予机器逻辑推理的能力，机器就具有智能。</p>
+</li>
+<li><p><strong>知识期</strong></p>
+<p>20世纪70年代中期起</p>
+<p>要使机器具有智能，就必须设法使机器拥有知识。</p>
+<p>专家系统是该时期的产物。</p>
+</li>
+<li><p><strong>广义的归纳学习</strong></p>
+<p>20世纪80年代来被研究最多的、应用最广的是“从样例中学习”，即<strong>广义的归纳学习</strong>。其涵盖了<strong>监督学习、无监督学习</strong>等。这方面的主流技术包括：</p>
+<ul>
+<li><strong>符号主义学习</strong>，代表是<strong>决策树</strong>和<strong>基于逻辑的学习</strong>。</li>
+<li><strong>连接主义学习</strong>，代表是<strong>神经网络</strong>。</li>
+<li><strong>统计学习</strong>，代表是<strong>SVM</strong>和更一般的<strong>核方法</strong>。</li>
+<li><strong>深度学习</strong>，是连接主义学习的一个分支，狭义地说就是“很多层”的神经网络。</li>
 </ul>
 </li>
-<li><strong>右移</strong><ul>
-<li>无符号数采用逻辑移位，有 <script type="math/tex">u >> k = \lfloor u / 2^k \rfloor</script></li>
-<li>有符号数采用算术移位，有 <script type="math/tex">u >> k = \lceil u / 2^k \rceil</script></li>
-<li>无符号数的右移等价于除以对应2的幂，有符号数不等价（会向错误的方向进位）</li>
-</ul>
-</li>
-</ol>
-<h3 id="何时使用无符号数？"><a href="#何时使用无符号数？" class="headerlink" title="何时使用无符号数？"></a>何时使用无符号数？</h3><ul>
-<li>进行模运算时</li>
-<li>当使用bit来表示集合时</li>
-<li>在系统编程中：bit masks、device commands…</li>
 </ul>
 
     </div>
@@ -257,6 +279,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+          </div>
 
         
 
@@ -264,13 +289,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/06/LRU%E5%92%8CLFU/" rel="prev" title="LRU和LFU">
-      <i class="fa fa-chevron-left"></i> LRU和LFU
+    <a href="/2020/09/24/Java%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%EF%BC%9F/" rel="prev" title="Java是如何找到一个类的？">
+      <i class="fa fa-chevron-left"></i> Java是如何找到一个类的？
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/08/21/%E6%B1%82%E4%BD%99%E5%92%8C%E5%8F%96%E6%A8%A1/" rel="next" title="求余和取模">
-      求余和取模 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -329,7 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#用bit来表示和操纵集合"><span class="nav-number">1.</span> <span class="nav-text">用bit来表示和操纵集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有符号数的计算公式"><span class="nav-number">2.</span> <span class="nav-text">有符号数的计算公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C中的无符号数"><span class="nav-number">3.</span> <span class="nav-text">C中的无符号数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有符号数的位扩展与截断"><span class="nav-number">4.</span> <span class="nav-text">有符号数的位扩展与截断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移位计算"><span class="nav-number">5.</span> <span class="nav-text">移位计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时使用无符号数？"><span class="nav-number">6.</span> <span class="nav-text">何时使用无符号数？</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习是什么？"><span class="nav-number">1.</span> <span class="nav-text">机器学习是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本术语"><span class="nav-number">2.</span> <span class="nav-text">基本术语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入"><span class="nav-number">2.1.</span> <span class="nav-text">输入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习任务"><span class="nav-number">2.2.</span> <span class="nav-text">学习任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#假设空间"><span class="nav-number">3.</span> <span class="nav-text">假设空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归纳偏好"><span class="nav-number">4.</span> <span class="nav-text">归纳偏好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#人工智能的发展历程"><span class="nav-number">5.</span> <span class="nav-text">人工智能的发展历程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

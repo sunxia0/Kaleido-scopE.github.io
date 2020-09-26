@@ -119,12 +119,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">4</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">10</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a>
 
   </li>
   </ul>
@@ -150,6 +150,197 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%EF%BC%881%EF%BC%89%E7%BB%AA%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xiao">
+      <meta itemprop="description" content="一个奇怪的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phantasia">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%EF%BC%881%EF%BC%89%E7%BB%AA%E8%AE%BA/" class="post-title-link" itemprop="url">机器学习 （1）绪论</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-27 00:23:05 / 修改时间：00:25:04" itemprop="dateCreated datePublished" datetime="2020-09-27T00:23:05+08:00">2020-09-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="机器学习是什么？"><a href="#机器学习是什么？" class="headerlink" title="机器学习是什么？"></a>机器学习是什么？</h2><p>机器学习主要研究关于在计算机上从数据中产生“模型”的算法，即学习算法。</p>
+<p>有了学习算法，我们把经验数据提供给它，它就能基于这些数据产生模型，在面对新的情况时，模型会给我们提供相应的判断。</p>
+<h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><ul>
+<li><p><strong>样本</strong></p>
+<p>指对于一个事件或对象的描述。</p>
+<p>这样的描述通常反映了事件或对象在某些方面的特征和表现。描述的每一项被称为<strong>属性</strong>。属性上的取值称为<strong>属性值</strong>。属性张成的空间被称为<strong>属性空间、样本空间或输入空间</strong>。</p>
+<p> 对每个样本的描述通常由多个属性组成，属性的个数称为样本的<strong>维数</strong>。这些属性值可以表示为一个多维向量。因此一个样本也可被称为<strong>特征向量</strong>。每个特征向量都对应了样本空间中的一个点。</p>
+</li>
+<li><p><strong>数据集</strong></p>
+<p>多个样本的集合构成了一个<strong>数据集</strong>。</p>
+</li>
+<li><p><strong>训练集、训练样本</strong></p>
+<p>模型训练过程中使用的数据集被称为<strong>训练集</strong>。训练集中的样本被称为<strong>训练样本</strong>。</p>
+</li>
+<li><p><strong>样例</strong></p>
+<p>带有标记信息的样本被称为<strong>样例</strong>。一个样例通常可以用一个由特征向量和标记信息组成的二元组进行表示。</p>
+</li>
+</ul>
+<h3 id="学习任务"><a href="#学习任务" class="headerlink" title="学习任务"></a>学习任务</h3><ul>
+<li><p><strong>分类</strong></p>
+<p>若我们要预测的是<strong>离散值</strong>，则该任务称为<strong>分类</strong>。</p>
+</li>
+<li><p><strong>回归</strong></p>
+<p>若我们要预测的是<strong>连续值</strong>，则该任务称为<strong>回归</strong>。</p>
+</li>
+<li><p><strong>聚类</strong></p>
+<p>将训练集中的样本分成若干个组，每组称为一个“簇”。这样的任务被称为<strong>聚类</strong>。</p>
+<p>聚类学习中使用的样本通常<strong>不拥有标记信息</strong>。</p>
+</li>
+<li><p><strong>监督学习、无监督学习</strong></p>
+<p>根据训练数据<strong>是否含有标记信息</strong>，学习任务可大致划分为<strong>监督学习</strong>和<strong>无监督学习</strong>。</p>
+<p>分类和回归是前者的代表。</p>
+<p>聚类是后者的代表。</p>
+</li>
+<li><p><strong>泛化</strong></p>
+<p>学得模型适用于新样本的能力被称为<strong>泛化能力</strong>。</p>
+</li>
+</ul>
+<h2 id="假设空间"><a href="#假设空间" class="headerlink" title="假设空间"></a>假设空间</h2><ul>
+<li><p><strong>归纳</strong></p>
+<p>从特殊到一般，即从具体事实归结出一般性规律。例如<strong>从样例中学习</strong>。</p>
+<p>从样例中学习又称为<strong>归纳学习</strong>。</p>
+<p>狭义的归纳学习要求从训练样本中学得概念，因此也称<strong>概念学习</strong>。</p>
+</li>
+<li><p><strong>演绎</strong></p>
+<p>从一般到特殊，即从基础原理推演出具体情况。例如<strong>数学证明</strong>。</p>
+</li>
+</ul>
+<p>学习过程可以看作一个在所有假设组成的空间中进行搜索的过程，搜索目标是找到与训练集匹配的假设。可能有多个假设与训练集一致，即存在一个与训练集一致的“假设集合”，称之为<strong>版本空间</strong>。</p>
+<h2 id="归纳偏好"><a href="#归纳偏好" class="headerlink" title="归纳偏好"></a>归纳偏好</h2><p><strong>通过学习得到的模型对应了假设空间中的一个假设</strong>。</p>
+<p>由于版本空间中可能存在多个满足训练集的假设，而这些假设在面临新样本时却有可能产生不同的输出。对于一个具体的学习算法而言，其本身的<strong>“偏好”</strong>将决定最终选择哪一个假设作为最终的模型。</p>
+<p><strong>“奥卡姆剃刀原则”</strong>是一种可以使用的偏好，即“若有多个假设与观察一致，则选择最简单的那个”。</p>
+<p>事实上，归纳偏好对应了学习算法本身所做出的关于“什么样的模型更好”的假设。</p>
+<p>NFL定理指出，<strong>当所有“问题”出现的机会相同、或所有问题同等重要时，不同学习算法的期望性能是相同的</strong>。</p>
+<p><strong>NFL定理最重要的寓意在于，当考虑学习算法时应和具体问题相联系</strong>。</p>
+<h2 id="人工智能的发展历程"><a href="#人工智能的发展历程" class="headerlink" title="人工智能的发展历程"></a>人工智能的发展历程</h2><ul>
+<li><p><strong>推理期</strong></p>
+<p>20世纪50年代-70年代初</p>
+<p>只要能赋予机器逻辑推理的能力，机器就具有智能。</p>
+</li>
+<li><p><strong>知识期</strong></p>
+<p>20世纪70年代中期起</p>
+<p>要使机器具有智能，就必须设法使机器拥有知识。</p>
+<p>专家系统是该时期的产物。</p>
+</li>
+<li><p><strong>广义的归纳学习</strong></p>
+<p>20世纪80年代来被研究最多的、应用最广的是“从样例中学习”，即<strong>广义的归纳学习</strong>。其涵盖了<strong>监督学习、无监督学习</strong>等。这方面的主流技术包括：</p>
+<ul>
+<li><strong>符号主义学习</strong>，代表是<strong>决策树</strong>和<strong>基于逻辑的学习</strong>。</li>
+<li><strong>连接主义学习</strong>，代表是<strong>神经网络</strong>。</li>
+<li><strong>统计学习</strong>，代表是<strong>SVM</strong>和更一般的<strong>核方法</strong>。</li>
+<li><strong>深度学习</strong>，是连接主义学习的一个分支，狭义地说就是“很多层”的神经网络。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/Java%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xiao">
+      <meta itemprop="description" content="一个奇怪的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phantasia">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/24/Java%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%EF%BC%9F/" class="post-title-link" itemprop="url">Java是如何找到一个类的？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-24 21:58:26 / 修改时间：21:59:46" itemprop="dateCreated datePublished" datetime="2020-09-24T21:58:26+08:00">2020-09-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -408,154 +599,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/06/LRU%E5%92%8CLFU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xiao">
-      <meta itemprop="description" content="一个奇怪的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phantasia">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/06/LRU%E5%92%8CLFU/" class="post-title-link" itemprop="url">LRU和LFU</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-06 01:04:06" itemprop="dateCreated datePublished" datetime="2020-04-06T01:04:06+08:00">2020-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 23:10:46" itemprop="dateModified" datetime="2020-06-07T23:10:46+08:00">2020-06-07</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="缓存淘汰算法"><a href="#缓存淘汰算法" class="headerlink" title="缓存淘汰算法"></a>缓存淘汰算法</h2><p>缓存是为了解决存储介质间读写速度相差过大而设置的一块大小有限的数据缓存区。经由缓存中转，可极大地提高数据的读写速度，从而提高系统性能。由于缓存大小有限，当存储的数据达到其大小限制时就需要淘汰掉其中一部分“价值最小”的数据，从而使其可以装入新的数据。这就是<strong>缓存淘汰算法</strong>的工作。缓存淘汰算法在计算机科学中应用十分广泛，从最底层的硬件到最上层的应用层都有着它的身影。例如缓和CPU和内存间速度差异的Cache，操作系统层的虚拟内存，应用层的缓存中间件等等。不同的评判数据价值的方式催生了不同的缓存淘汰算法，常见的有FIFO、LRU、LFU等。本次，我们结合两道题目分析LRU和LFU两种缓存淘汰算法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/06/LRU%E5%92%8CLFU/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/03/INT-MAX%E5%92%8CINT-MIN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xiao">
-      <meta itemprop="description" content="一个奇怪的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phantasia">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/03/INT-MAX%E5%92%8CINT-MIN/" class="post-title-link" itemprop="url">INT_MAX和INT_MIN</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-03 20:09:59" itemprop="dateCreated datePublished" datetime="2020-04-03T20:09:59+08:00">2020-04-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-02 17:34:44" itemprop="dateModified" datetime="2020-07-02T17:34:44+08:00">2020-07-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天Leetcode的每日一题是实现一个atoi函数，其中要求当参数大于INT_MAX或小于INT_MIN时返回INT_MAX或INT_MIN。做题时突然发现自己对如何通过位运算得到INT_MAX和INT_MIN还一知半解，因此决定探索一下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/03/INT-MAX%E5%92%8CINT-MIN/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -621,14 +668,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
