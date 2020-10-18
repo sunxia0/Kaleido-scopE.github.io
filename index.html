@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">13</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a>
 
   </li>
   </ul>
@@ -292,64 +292,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/Java%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%EF%BC%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xiao">
-      <meta itemprop="description" content="一个奇怪的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phantasia">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/24/Java%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%EF%BC%9F/" class="post-title-link" itemprop="url">Java是如何找到一个类的？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-09-24 21:58:26 / 修改时间：21:59:46" itemprop="dateCreated datePublished" datetime="2020-09-24T21:58:26+08:00">2020-09-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <a id="more"></a>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/10/Leetcode-60-%E7%AC%ACk%E4%B8%AA%E6%8E%92%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -492,6 +434,118 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/28/CSAPP-01-Bits-Bytes-and-Integers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xiao">
+      <meta itemprop="description" content="一个奇怪的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phantasia">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/28/CSAPP-01-Bits-Bytes-and-Integers/" class="post-title-link" itemprop="url">CSAPP 01 - Bits, Bytes and Integers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-28 23:07:41" itemprop="dateCreated datePublished" datetime="2020-06-28T23:07:41+08:00">2020-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-02 21:27:35" itemprop="dateModified" datetime="2020-07-02T21:27:35+08:00">2020-07-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="用bit来表示和操纵集合"><a href="#用bit来表示和操纵集合" class="headerlink" title="用bit来表示和操纵集合"></a>用bit来表示和操纵集合</h3><p>宽为<script type="math/tex">w</script>的bit向量可用于表示<script type="math/tex">A=\{0,\cdots,w-1\}</script>的子集，<script type="math/tex">j \in A</script> 当且仅当 <script type="math/tex">a_j=1</script>。</p>
+<p>例如，01101001可表示{0, 3, 5, 6}；01010101可表示{0, 2, 4, 6}。</p>
+<p>&amp;，｜，~可分别求集合的交、并、补集。</p>
+<p><strong>注：</strong>C++提供了bitset库用于管理一系列的bit位。</p>
+<h3 id="有符号数的计算公式"><a href="#有符号数的计算公式" class="headerlink" title="有符号数的计算公式"></a>有符号数的计算公式</h3><script type="math/tex; mode=display">
+-x_{w-1}\cdot2^{w-1}+\sum_{i=0}^{w-2}x_i\cdot2^i</script><p>其中<script type="math/tex">w</script>是位宽，最高位第<script type="math/tex">w-1</script>是符号位。</p>
+<h3 id="C中的无符号数"><a href="#C中的无符号数" class="headerlink" title="C中的无符号数"></a>C中的无符号数</h3><ol>
+<li><p><strong>int和unsigned相互转换</strong></p>
+<p>保留bit模式，但根据符号位的不同含义重新翻译其值。</p>
+<p>int和unsigned出现在同一个表达式时，int会被隐式转换成unsigned，从而可能导致一些混乱。</p>
+<p>例如：</p>
+<p>-1 &lt; 0</p>
+<p>-1 &gt; 0U</p>
+</li>
+<li><p><strong>一段危险的代码</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = cnt - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    a[i] = a[i + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+<p>unsigned始终不小于0。当其等于0时，再进行一次自减将变成UINT_MAX，从而导致死循环。</p>
+<p>sizeof默认返回unsigned，在使用其返回值时同样应注意以上代码的问题。</p>
+<p>若想要使用unsigned作为循环索引，正确的姿势是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = cnt - <span class="number">2</span>; i &lt; cnt; i--)</span><br><span class="line">    a[i] = a[i + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="有符号数的位扩展与截断"><a href="#有符号数的位扩展与截断" class="headerlink" title="有符号数的位扩展与截断"></a>有符号数的位扩展与截断</h3><ol>
+<li><p><strong>位扩展</strong></p>
+<p>用现有最高位填充所有扩展位。如short ➡️ int时会发生。</p>
+</li>
+<li><p><strong>位截断</strong></p>
+<p>直接截去多余的位，可能出现正数变负数，负数变正数。如int ➡️ short时会发生。</p>
+</li>
+</ol>
+<h3 id="移位计算"><a href="#移位计算" class="headerlink" title="移位计算"></a>移位计算</h3><ol>
+<li><strong>左移</strong><ul>
+<li>$u &lt;&lt; k = u * 2^k$</li>
+<li>对于有符号数和无符号数都适用</li>
+</ul>
+</li>
+<li><strong>右移</strong><ul>
+<li>无符号数采用逻辑移位，有 <script type="math/tex">u >> k = \lfloor u / 2^k \rfloor</script></li>
+<li>有符号数采用算术移位，有 <script type="math/tex">u >> k = \lceil u / 2^k \rceil</script></li>
+<li>无符号数的右移等价于除以对应2的幂，有符号数不等价（会向错误的方向进位）</li>
+</ul>
+</li>
+</ol>
+<h3 id="何时使用无符号数？"><a href="#何时使用无符号数？" class="headerlink" title="何时使用无符号数？"></a>何时使用无符号数？</h3><ul>
+<li>进行模运算时</li>
+<li>当使用bit来表示集合时</li>
+<li>在系统编程中：bit masks、device commands…</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -561,7 +615,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
