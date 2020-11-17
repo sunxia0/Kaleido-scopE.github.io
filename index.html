@@ -124,7 +124,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">13</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">14</span></a>
 
   </li>
   </ul>
@@ -150,6 +150,125 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/07/CSAPP-02-Floating-Point/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Xiao">
+      <meta itemprop="description" content="一个奇怪的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phantasia">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/07/CSAPP-02-Floating-Point/" class="post-title-link" itemprop="url">CSAPP 02 - Floating Point</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-07 22:44:49" itemprop="dateCreated datePublished" datetime="2020-11-07T22:44:49+08:00">2020-11-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-18 00:51:39" itemprop="dateModified" datetime="2020-11-18T00:51:39+08:00">2020-11-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="二进制小数"><a href="#二进制小数" class="headerlink" title="二进制小数"></a>二进制小数</h3><p>对于小数</p>
+<script type="math/tex; mode=display">
+b_mb_{m-1} \dots b_1b_0.b_{-1}b_{-2} \dots b_{-n-1}b_{-n}</script><p>其中 <script type="math/tex">b_i</script> 取 0 或 1，则其值 <script type="math/tex">b</script> 为</p>
+<script type="math/tex; mode=display">
+b=\sum_{i=-n}^{m}2^{i} \cdot b_i</script><p>在编码长度有限的条件下，这种表示法只能表示那些能被写成形如 <script type="math/tex">x \cdot 2^y</script> 的数。而对于无法写成这种形式的数只能进行近似表示，如 1/5。</p>
+<h3 id="IEEE浮点表示"><a href="#IEEE浮点表示" class="headerlink" title="IEEE浮点表示"></a>IEEE浮点表示</h3><p>一个浮点数 <script type="math/tex">V</script> 表示为</p>
+<script type="math/tex; mode=display">
+V=(-1)^s \times M \times 2^E</script><ul>
+<li><script type="math/tex">s</script> ：符号位，正数为1，负数为0。</li>
+<li><script type="math/tex">M</script> ：尾数，取值为1 ~ 2 - ε 或 0 ~ 1 - ε 。</li>
+<li><script type="math/tex">E</script> ：阶码，表示2的E次幂。</li>
+</ul>
+<p>对这三部分进行编码：</p>
+<ul>
+<li>一个单独的符号位直接编码 <script type="math/tex">s</script> 。</li>
+<li><script type="math/tex">k</script> 位阶码字段 <script type="math/tex">exp=e_{k-1} \dots e_1e_0</script> 编码 <script type="math/tex">E</script> 。</li>
+<li><script type="math/tex">n</script> 位小数字段 <script type="math/tex">frac=f_{n-1} \dots f_1f_0</script> 编码 <script type="math/tex">M</script> 。</li>
+</ul>
+<p>以C语言为例，各部分编码位数如图1</p>
+<center><img src="/2020/11/07/CSAPP-02-Floating-Point/1.png"></center>
+
+<center>图1 C语言浮点数编码位数</center>
+
+<p>给定位表示，根据 <script type="math/tex">exp</script> 的值，被编码的值可被分为三种情况，见图2（以单精度为例）</p>
+<center><img src="/2020/11/07/CSAPP-02-Floating-Point/2.png"></center>
+
+<center>图2 单精度浮点数分类</center>
+
+<ol>
+<li><p><strong>规格化的</strong></p>
+<p>阶码 <script type="math/tex">E=e-bias</script> ，其中 <script type="math/tex">e=e_{k-1} \dots e_1e_0</script> 是无符号数，<script type="math/tex">bias</script> 是一个等于 <script type="math/tex">2^{k-1}-1</script> 的偏置值（单精度即127），因此产生的指数范围是 -126 ~ 127。</p>
+<p>尾数 <script type="math/tex">M=1+f</script>。</p>
+</li>
+<li><p><strong>非规格化的</strong></p>
+<p>阶码 <script type="math/tex">E=1-bias</script> ，尾数 <script type="math/tex">M=f</script>，此时尾数不包含隐含的1。非规格化数提供了浮点0的表示方法。</p>
+</li>
+<li><p><strong>特殊值</strong></p>
+<p>当小数域全为0时，得到的值表示 <script type="math/tex">\infty</script>，根据符号位确定表示的是 <script type="math/tex">+\infty</script> 还是 <script type="math/tex">-\infty</script>。</p>
+<p>当小数域含有1时，得到的值表示 NaN，例如求 <script type="math/tex">\sqrt{-1}</script> 就会得到这样的值。</p>
+</li>
+</ol>
+<h3 id="舍入"><a href="#舍入" class="headerlink" title="舍入"></a>舍入</h3><p>当某个数 <script type="math/tex">x</script> 无法用给定精度位数表示需要进行，为其找到一个最近的，能进行浮点表示的数代表它，这就是舍入运算。</p>
+<p>舍入运算会遇到的一个问题是究竟应该向下舍入还是向上舍入，一种方法是同时计算上下界 <script type="math/tex">x^+</script> 和 <script type="math/tex">x^-</script>，使得 <script type="math/tex">x^- \le x \le x^+</script>。</p>
+<p>IEEE浮点格式定义了四种不同的舍入方式</p>
+<ol>
+<li><strong>向偶数舍入：</strong>4 舍，6入，5 向偶数。例如 1.5 和 2.5 均舍为 2，3.5 和 4.5 均舍为 4。</li>
+<li><strong>向零舍入：</strong>正数下舍，负数上舍。</li>
+<li><strong>向上舍入：</strong>ceil</li>
+<li><strong>向下舍入：</strong>floor</li>
+</ol>
+<p>向偶数舍入可以降低平均值计算时的误差，用于找到最接近的匹配。其他三种方法用于计算上下界。</p>
+<p>对于向偶数舍入，在具体操作时，当最低精度位为0时视为偶数，为1时视为奇数。每次舍入都倾向于使得最低精度位变为0。</p>
+<p>例如当最低精度位为四分之一位，即小数点后两位时，<script type="math/tex">10.11100_2(2 \frac{7}{8})</script> 被舍入到 <script type="math/tex">11.00_2(3)</script>。而 <script type="math/tex">10.10100_2(2 \frac{5}{8})</script> 被舍入到 <script type="math/tex">10.10_2(2 \frac{1}{2})</script>。</p>
+<h3 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h3><p>谨慎地对浮点运算使用<strong>结合律</strong>和<strong>分配律</strong>，尤其是在出现大数运算时。例如如下的程序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> a1 = (<span class="number">3.14</span> + <span class="number">1e20</span>) - <span class="number">1e20</span>, a2 = <span class="number">3.14</span> + (<span class="number">1e20</span> - <span class="number">1e20</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%f %f\n%f %f\n"</span>, a1, a2);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//0.000000 3.140000</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -185,7 +304,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-21 18:40:31" itemprop="dateModified" datetime="2020-10-21T18:40:31+08:00">2020-10-21</time>
+                <time title="修改时间：2020-10-21 18:40:53" itemprop="dateModified" datetime="2020-10-21T18:40:53+08:00">2020-10-21</time>
               </span>
 
           
@@ -440,72 +559,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/21/%E6%B1%82%E4%BD%99%E5%92%8C%E5%8F%96%E6%A8%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Xiao">
-      <meta itemprop="description" content="一个奇怪的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Phantasia">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/21/%E6%B1%82%E4%BD%99%E5%92%8C%E5%8F%96%E6%A8%A1/" class="post-title-link" itemprop="url">求余和取模</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-08-21 00:22:59 / 修改时间：13:24:08" itemprop="dateCreated datePublished" datetime="2020-08-21T00:22:59+08:00">2020-08-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天写题的时候遇到了两个异号数进行%运算的情形，研究了一下才发现求余和取模是不一样的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/21/%E6%B1%82%E4%BD%99%E5%92%8C%E5%8F%96%E6%A8%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -575,7 +628,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
