@@ -24,7 +24,7 @@
 <meta property="og:description" content="Java面向对象的一些关键知识">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-30T02:54:03.000Z">
-<meta property="article:modified_time" content="2020-10-07T16:56:15.248Z">
+<meta property="article:modified_time" content="2021-02-05T13:59:17.284Z">
 <meta property="article:author" content="Xiao">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">4</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-08 00:56:15" itemprop="dateModified" datetime="2020-10-08T00:56:15+08:00">2020-10-08</time>
+                <time title="修改时间：2021-02-05 21:59:17" itemprop="dateModified" datetime="2021-02-05T21:59:17+08:00">2021-02-05</time>
               </span>
 
           
@@ -205,10 +205,10 @@
         <p>Java面向对象的一些关键知识</p>
 <a id="more"></a>
 <h3 id="面向对象的四个特征"><a href="#面向对象的四个特征" class="headerlink" title="面向对象的四个特征"></a>面向对象的四个特征</h3><ul>
-<li><strong>抽象：</strong>提取出一类事物的共有属性和行为。</li>
-<li><strong>封装：</strong>把抽象出的数据和行为封装在一起，供程序其他部分有权限地使用。</li>
-<li><strong>继承：</strong>在已有结果基础上继续进行功能的扩充</li>
-<li><strong>多态：</strong>同一类型的同一行为在不同情况下可以表现出不同的状态。</li>
+<li><strong>抽象：</strong> 提取出一类事物的共有属性和行为。</li>
+<li><strong>封装：</strong> 把抽象出的数据和行为封装在一起，供程序其他部分有权限地使用。</li>
+<li><strong>继承：</strong> 在已有结果基础上继续进行功能的扩充</li>
+<li><strong>多态：</strong> 同一类型的同一行为在不同情况下可以表现出不同的状态。</li>
 </ul>
 <h3 id="权限关键字"><a href="#权限关键字" class="headerlink" title="权限关键字"></a>权限关键字</h3><div class="table-container">
 <table>
@@ -363,7 +363,7 @@
 <li>局部内部类不能有静态成员</li>
 <li>局部内部类中可以使用 <code>外部类名.this</code> 访问其外部类中的属性和方法，但外部类不能访问局部内部类中定义的成员</li>
 <li>局部内部类只能在定义域内被实例化</li>
-<li><p><em>JDK 1.8以前，局部内部类对象不能使用该内部类所在方法的非 <code>final</code> 局部变量</em></p>
+<li><p>JDK 1.8以前，局部内部类对象不能使用该内部类所在方法的非 <code>final</code> 局部变量</p>
 <blockquote>
 <p>当调用方法时，局部变量如果没有用final修饰，其生命周期和方法的生命周期是一样的。方法被调用时会入栈，方法结束后即弹栈，这个局部变量也会消失。那么如果局部内部类对象还没有马上消失想用这个局部变量，显然已无法使用了。用final修饰的变量会在类加载的时候进入常量池，即使方法弹栈，常量池的常量还在，也就可以继续使用了。</p>
 <p>JDK 1.8及以后编译器会自动为被局部内部类使用的局部变量加上final关键字修饰。</p>
@@ -385,9 +385,9 @@
 <li>父类引用可以指向子类对象，自动转换（向上转型）</li>
 <li>子类引用指向父类对象时需要强制转换（向下转型）</li>
 <li>实现多态的三个必要条件：<strong>继承、重写、向上转型</strong><ul>
-<li><strong>继承：</strong>在多态中需要存在有继承关系的父类和子类</li>
-<li><strong>重写：</strong>子类对父类中某些方法进行重新定义，在调用这些方法时就会调用子类的方法。</li>
-<li><strong>向上转型：</strong>父类的引用指向父类对象时，调用的是父类中定义的方法；指向子类对象时，调用的是子类中定义的方法。</li>
+<li><strong>继承：</strong> 在多态中需要存在有继承关系的父类和子类</li>
+<li><strong>重写：</strong> 子类对父类中某些方法进行重新定义，在调用这些方法时就会调用子类的方法。</li>
+<li><strong>向上转型：</strong> 父类的引用指向父类对象时，调用的是父类中定义的方法；指向子类对象时，调用的是子类中定义的方法。</li>
 </ul>
 </li>
 <li>将接口的引用指向不同的实现该接口的类实例可以实现基于接口的多态</li>
@@ -552,7 +552,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

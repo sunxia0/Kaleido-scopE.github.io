@@ -16,15 +16,15 @@
     var CONFIG = {"hostname":"sunxia0.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="题意给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1： 123输入: &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。 示例 2： 123输入: &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。 示例 3：">
+  <meta name="description" content="题意给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 3-无重复字符的最长子串">
 <meta property="og:url" content="https://sunxia0.github.io/2020/03/18/Leetcode-3-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/">
 <meta property="og:site_name" content="Phantasia">
-<meta property="og:description" content="题意给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 1： 123输入: &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。 示例 2： 123输入: &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。 示例 3：">
+<meta property="og:description" content="题意给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-18T09:53:53.000Z">
-<meta property="article:modified_time" content="2020-06-07T15:13:20.262Z">
+<meta property="article:modified_time" content="2021-02-05T14:12:54.449Z">
 <meta property="article:author" content="Xiao">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">4</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -188,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 23:13:20" itemprop="dateModified" datetime="2020-06-07T23:13:20+08:00">2020-06-07</time>
+                <time title="修改时间：2021-02-05 22:12:54" itemprop="dateModified" datetime="2021-02-05T22:12:54+08:00">2021-02-05</time>
               </span>
 
           
@@ -203,30 +203,31 @@
 
       
         <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>给定一个字符串，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<a id="more"></a>
 <p><strong>示例 1：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
 <p><strong>示例 2：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;bbbbb&quot;</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span><br></pre></td></tr></table></figure>
 <p><strong>示例 3：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;pwwkew&quot;</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span><br><span class="line">     请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<!-- more -->
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>面试栽在了这道题上，当时糊涂了没想明白，决定重做一遍。</p>
-<p>采用双指针，<script type="math/tex">i</script> 和 <script type="math/tex">j</script> 分别指向当前判断的子串的首尾。用<code>map&lt;char,int&gt;</code>保存字符上一次出现的位置+1，+1的原因是为了避免和map中当key不存在时，int默认值为0的情况冲突。同时维护遍历过程中的最大长度。</p>
-<p>初始化 <script type="math/tex">i=0, j=1</script>，每次判断 <script type="math/tex">s[j]</script> 在map中的值，会存在三种情况：</p>
+<p>采用双指针，$i$ 和 $j$ 分别指向当前判断的子串的首尾。用<code>map&lt;char,int&gt;</code>保存字符上一次出现的位置+1，+1的原因是为了避免和map中当key不存在时，int默认值为0的情况冲突。同时维护遍历过程中的最大长度。</p>
+<p>初始化 $i=0, j=1$，每次判断 $s[j]$ 在map中的值，会存在三种情况：</p>
 <ol>
-<li><p><script type="math/tex">m[s[j]] = 0</script>：</p>
-<p>表示 <script type="math/tex">s[j]</script> 尚未在 <script type="math/tex">s[0, j)</script> 中出现过。</p>
+<li><p>$m[s[j]] = 0$：</p>
+<p>表示 $s[j]$ 尚未在 $s[0, j)$ 中出现过。</p>
 </li>
-<li><p><script type="math/tex">m[s[j]] - 1 < i</script>：</p>
-<p>表示 <script type="math/tex">s[j]</script> 在 <script type="math/tex">s[0, i)</script> 中出现过，但没有在 <script type="math/tex">s[i,j)</script>中出现过。</p>
+<li><p>$m[s[j]] - 1 &lt; i$：</p>
+<p>表示 $s[j]$ 在 $s[0, i)$ 中出现过，但没有在 $s[i,j)$ 中出现过。</p>
 </li>
-<li><p><script type="math/tex">m[s[j]] - 1 \ge i</script>：</p>
-<p>表示 <script type="math/tex">s[j]</script> 在 <script type="math/tex">s[i,j)</script> 中出现过。</p>
+<li><p>$m[s[j]] - 1 \ge i$：</p>
+<p>表示 $s[j]$ 在 $s[i,j)$ 中出现过。</p>
 </li>
 </ol>
-<p>在第1、2种情况中， <script type="math/tex">s[j]</script> 并没有出现在当前判断的子串内，因此可以被加入到子串中，同时判断最大长度是否可更新。</p>
-<p>在第3种情况中，<script type="math/tex">s[j]</script> 出现在了当前判断的子串内，设其位置为 <script type="math/tex">j'</script> ，此时可直接使指针 <script type="math/tex">i=j'+1</script> ，即令 <script type="math/tex">i=m[s[j]]</script>。因为当 <script type="math/tex">i</script> 取 <script type="math/tex">[i, j']</script> 中任何值时，<script type="math/tex">s[i,j]</script>中都将存在重复字符。</p>
-<p>无论上述哪一种情况，在判断完 <script type="math/tex">s[j]</script> 后，都应更新使 <script type="math/tex">m[s[j]]=j+1</script> ，同时使 <script type="math/tex">j</script> 右移一位。循环上述过程直到 <script type="math/tex">j</script> 遍历完 <script type="math/tex">s</script> ，此时维护的最大长度即为答案，算法复杂度 <script type="math/tex">O(n)</script> 。</p>
+<p>在第1、2种情况中， $s[j]$ 并没有出现在当前判断的子串内，因此可以被加入到子串中，同时判断最大长度是否可更新。</p>
+<p>在第3种情况中，$s[j]$ 出现在了当前判断的子串内，设其位置为 $j’$ ，此时可直接使指针 $i=j’+1$，即令 $i=m[s[j]]$。因为当 $i$ 取 $[i, j’]$ 中任何值时，$s[i,j]$ 中都将存在重复字符。</p>
+<p>无论上述哪一种情况，在判断完 $s[j]$ 后，都应更新使 $m[s[j]]=j+1$ ，同时使 $j$ 右移一位。循环上述过程直到 $j$ 遍历完 $s$ ，此时维护的最大长度即为答案，算法复杂度 $O(n)$。</p>
 <p>代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str == <span class="string">""</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> s = <span class="number">0</span>, e;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; pos;<span class="comment">//pos[ch]表示ch在str中出现的位置+1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line">        pos[str[s]] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (e = <span class="number">1</span>; e &lt; str.length(); e++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pos[str[e]] - <span class="number">1</span> &gt;= s) </span><br><span class="line">                s = pos[str[e]];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                ans = <span class="built_in">max</span>(e-s+<span class="number">1</span>, ans);</span><br><span class="line">            pos[str[e]] = e + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -333,7 +334,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
