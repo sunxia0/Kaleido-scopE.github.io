@@ -16,26 +16,20 @@
     var CONFIG = {"hostname":"sunxia0.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Notes for Machine-Level Programming.">
+  <meta name="description" content="题意假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。每个 people[i] &#x3D; [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。 请你重新构造并返回输入数组 people 所表示的队列。返回的队列应该格式化为数组 queue ，其中 queue[j] &#x3D; [hj, kj] 是队列中第 j 个人">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSAPP 03 - Machine-Level Programming">
-<meta property="og:url" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/">
+<meta property="og:title" content="Leetcode 406-根据身高重建队列">
+<meta property="og:url" content="https://sunxia0.github.io/2021/02/06/Leetcode-406-%E6%A0%B9%E6%8D%AE%E8%BA%AB%E9%AB%98%E9%87%8D%E5%BB%BA%E9%98%9F%E5%88%97/">
 <meta property="og:site_name" content="Phantasia">
-<meta property="og:description" content="Notes for Machine-Level Programming.">
+<meta property="og:description" content="题意假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。每个 people[i] &#x3D; [hi, ki] 表示第 i 个人的身高为 hi ，前面 正好 有 ki 个身高大于或等于 hi 的人。 请你重新构造并返回输入数组 people 所表示的队列。返回的队列应该格式化为数组 queue ，其中 queue[j] &#x3D; [hj, kj] 是队列中第 j 个人">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/1.png">
-<meta property="og:image" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/2.png">
-<meta property="og:image" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/3.png">
-<meta property="og:image" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/4.png">
-<meta property="og:image" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/5.png">
-<meta property="article:published_time" content="2021-02-05T15:25:20.000Z">
-<meta property="article:modified_time" content="2021-02-05T17:10:18.785Z">
+<meta property="article:published_time" content="2021-02-06T14:53:12.000Z">
+<meta property="article:modified_time" content="2021-02-06T15:57:29.543Z">
 <meta property="article:author" content="Xiao">
-<meta property="article:tag" content="csapp">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/1.png">
 
-<link rel="canonical" href="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/">
+<link rel="canonical" href="https://sunxia0.github.io/2021/02/06/Leetcode-406-%E6%A0%B9%E6%8D%AE%E8%BA%AB%E9%AB%98%E9%87%8D%E5%BB%BA%E9%98%9F%E5%88%97/">
 
 
 <script id="page-configurations">
@@ -48,7 +42,7 @@
   };
 </script>
 
-  <title>CSAPP 03 - Machine-Level Programming | Phantasia</title>
+  <title>Leetcode 406-根据身高重建队列 | Phantasia</title>
   
 
 
@@ -164,7 +158,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sunxia0.github.io/2021/02/05/CSAPP-03-Machine-Level-Programming/">
+    <link itemprop="mainEntityOfPage" href="https://sunxia0.github.io/2021/02/06/Leetcode-406-%E6%A0%B9%E6%8D%AE%E8%BA%AB%E9%AB%98%E9%87%8D%E5%BB%BA%E9%98%9F%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -177,7 +171,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CSAPP 03 - Machine-Level Programming
+          Leetcode 406-根据身高重建队列
         </h1>
 
         <div class="post-meta">
@@ -186,16 +180,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-02-05 23:25:20" itemprop="dateCreated datePublished" datetime="2021-02-05T23:25:20+08:00">2021-02-05</time>
+              <time title="创建时间：2021-02-06 22:53:12 / 修改时间：23:57:29" itemprop="dateCreated datePublished" datetime="2021-02-06T22:53:12+08:00">2021-02-06</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-06 01:10:18" itemprop="dateModified" datetime="2021-02-06T01:10:18+08:00">2021-02-06</time>
-              </span>
 
           
 
@@ -208,52 +196,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Notes for Machine-Level Programming.</p>
+        <h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>假设有打乱顺序的一群人站成一个队列，数组 <code>people</code> 表示队列中一些人的属性（不一定按顺序）。每个 <code>people[i] = [hi, ki]</code> 表示第 <code>i</code> 个人的身高为 <code>hi</code> ，前面 <strong>正好</strong> 有 <code>ki</code> 个身高大于或等于 <code>hi</code> 的人。</p>
+<p>请你重新构造并返回输入数组 <code>people</code> 所表示的队列。返回的队列应该格式化为数组 <code>queue</code> ，其中 <code>queue[j] = [hj, kj]</code> 是队列中第 <code>j</code> 个人的属性（<code>queue[0]</code> 是排在队列前面的人）。</p>
+<p><strong>示例1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入：people &#x3D; [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]</span><br><span class="line">输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]</span><br><span class="line">解释：</span><br><span class="line">编号为 0 的人身高为 5 ，没有身高更高或者相同的人排在他前面。</span><br><span class="line">编号为 1 的人身高为 7 ，没有身高更高或者相同的人排在他前面。</span><br><span class="line">编号为 2 的人身高为 5 ，有 2 个身高更高或者相同的人排在他前面，即编号为 0 和 1 的人。</span><br><span class="line">编号为 3 的人身高为 6 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。</span><br><span class="line">编号为 4 的人身高为 4 ，有 4 个身高更高或者相同的人排在他前面，即编号为 0、1、2、3 的人。</span><br><span class="line">编号为 5 的人身高为 7 ，有 1 个身高更高或者相同的人排在他前面，即编号为 1 的人。</span><br><span class="line">因此 [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]] 是重新构造后的队列。</span><br></pre></td></tr></table></figure>
+<p><strong>示例2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：people &#x3D; [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]</span><br><span class="line">输出：[[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h2 id="汇编基础"><a href="#汇编基础" class="headerlink" title="汇编基础"></a>汇编基础</h2><h3 id="计算机设计"><a href="#计算机设计" class="headerlink" title="计算机设计"></a>计算机设计</h3><ul>
-<li><p><strong>指令集架构（ISA）</strong></p>
-<p>为编写机器/汇编代码而需要理解的处理器设计部分<br>如：指令集规范、寄存器</p>
-<blockquote>
-<p>Intel: x86, IA32, Itanium, x86-64<br>ARM: 广泛应用于移动设备<br>RISC V: 一种全新的开源ISA</p>
-</blockquote>
-</li>
-<li><p><strong>微架构</strong></p>
-<p>指令集架构的具体实现<br>如：缓存的大小、核心频率</p>
-</li>
-</ul>
-<h3 id="汇编-机器代码"><a href="#汇编-机器代码" class="headerlink" title="汇编/机器代码"></a>汇编/机器代码</h3><ul>
-<li><p><strong>CPU计算模型</strong></p>
-<center><img src="/2021/02/05/CSAPP-03-Machine-Level-Programming/1.png" width="80%"></center>
-</li>
-<li><p><strong>汇编：数据类型</strong></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>首先我们需要对完全无序的队列做一些预处理。考虑这样一个排队问题：</p>
+<p>有 $n$ 个人，将他们从高到矮排成一队，设排队每个位置上的身高分别是 $h_0,h1,\cdots ,h_{n-1}$ 。</p>
+<p>若 $n$ 个人的身高不同，该问题十分简单。但若存在身高相同的人时，我们需要指定一个特殊的排序方式才能排出一个完整的队列。我们可以利用原问题提供的 $k$ 值。设 $h_i=h_j, k_i&gt;k_j$ 。显然，原问题中，身高相同时，$k$ 值越大的人所在位置越靠后，即 $h_i$ 必然会排在 $h_j$ 之后。因此可以设 $h_i = h_j - \delta$ ，其中 $\delta$ 是一个不影响其他身高排序的微小量。这样一来，每个人的身高又可以视为不同的了。</p>
+<p>解决这一问题只需要对原序列做这样一个排序：<strong>首先按第一分量（身高）降序排列，当第一分量相等时，按第二分量（k）升序排列</strong>。</p>
+<p>在完成这一排序后，我们再考虑原问题。原问题要求，对于队伍中位置 $i$ 的人，队伍之前身高 $\ge h_i$ 的人数正好为 $k_i$。我们将上一问题排好的顺序重新排入下一个队列。当排入第 $i$ 个人时：</p>
 <ul>
-<li>1、2、4、8字节的整数（作为数值或地址）</li>
-<li>4、8、10字节的浮点数</li>
-<li>代码：一系列指令构成的字节序列</li>
-<li>没有复合类型如数组、结构体</li>
+<li>第 $0, \cdots , i-1$ 个人已经在队伍中安排好了位置。他们都比第 $i$ 个人高，因此，只要他们排在第 $i$ 个人前面即可对 $k_i$ 产生影响。</li>
+<li>第 $i+1, \cdots, n-1$ 个人都比第 $i$ 个人矮，无论他们站在哪里都不会对第 $i$ 个人产生影响。</li>
 </ul>
-<center><img src="/2021/02/05/CSAPP-03-Machine-Level-Programming/2.png" width="80%"></center>
+<p>因此，我们只要将第 $i$ 个人“插入”当前以排好的队伍，使得其前面正好有 $k_i$ 个人即可。依次处理每一个人，即可得到原问题需要的排序。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] reconstructQueue(<span class="keyword">int</span>[][] people) &#123;</span><br><span class="line">        Arrays.sort(people, (o1, o2) -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (o1[<span class="number">0</span>] == o2[<span class="number">0</span>])</span><br><span class="line">                <span class="keyword">return</span> o1[<span class="number">1</span>] - o2[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">return</span> o2[<span class="number">0</span>] - o1[<span class="number">0</span>];</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        List&lt;<span class="keyword">int</span>[]&gt; ans = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] person : people) &#123;</span><br><span class="line">            ans.add(person[<span class="number">1</span>], person);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.toArray(<span class="keyword">new</span> <span class="keyword">int</span>[ans.size()][]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<center>x86-64寄存器</center>
-
-<center><img src="/2021/02/05/CSAPP-03-Machine-Level-Programming/3.png" width="80%"></center>
-
-<center>IA32寄存器</center>
-</li>
-<li><p><strong>汇编：操作</strong></p>
-<ul>
-<li>在寄存器与内存间转移数据（双向）</li>
-<li>在寄存器或内存数据上执行算术操作</li>
-<li>转移控制（无条件跳转进入过程、条件分支、间接分支）</li>
-<li>简单内存地址模式<br><em>mov_ src dest</em><br>movq、movl、movw、movb分别操作8、4、2、1个字节<br>(R): Mem[Reg[R]], movq (%rcx), %rax<br>D(R): Mem[Reg[R]+D], movq 8(%rcx), %rax</li>
-<li>完全内存地址模式<br><em>lea_ src dest</em><br>leaq、leal、leaw、leab分别操作8、4、2、1个字节<br>D(Rb,Ri,S): Mem[Reg[Rb]+S*Reg[Ri]+D], leaq 8(%rdi,%rdi,2), %rax</li>
-<li>其他指令<center><img src="/2021/02/05/CSAPP-03-Machine-Level-Programming/4.png" width="60%"></center>
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="C-gt-汇编码-gt-机器码"><a href="#C-gt-汇编码-gt-机器码" class="headerlink" title="C -&gt; 汇编码 -&gt; 机器码"></a>C -&gt; 汇编码 -&gt; 机器码</h3><center><img src="/2021/02/05/CSAPP-03-Machine-Level-Programming/5.png" width="80%"></center>
     </div>
 
     
@@ -262,7 +224,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/csapp/" rel="tag"># csapp</a>
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
           </div>
 
         
@@ -271,13 +233,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/07/CSAPP-02-Floating-Point/" rel="prev" title="CSAPP 02 - Floating Point">
-      <i class="fa fa-chevron-left"></i> CSAPP 02 - Floating Point
+    <a href="/2021/02/05/CSAPP-03-Machine-Level-Programming/" rel="prev" title="CSAPP 03 - Machine-Level Programming">
+      <i class="fa fa-chevron-left"></i> CSAPP 03 - Machine-Level Programming
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/02/06/Leetcode-406-%E6%A0%B9%E6%8D%AE%E8%BA%AB%E9%AB%98%E9%87%8D%E5%BB%BA%E9%98%9F%E5%88%97/" rel="next" title="Leetcode 406-根据身高重建队列">
-      Leetcode 406-根据身高重建队列 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -336,7 +295,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编基础"><span class="nav-number">1.</span> <span class="nav-text">汇编基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机设计"><span class="nav-number">1.1.</span> <span class="nav-text">计算机设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#汇编-机器代码"><span class="nav-number">1.2.</span> <span class="nav-text">汇编&#x2F;机器代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-gt-汇编码-gt-机器码"><span class="nav-number">1.3.</span> <span class="nav-text">C -&gt; 汇编码 -&gt; 机器码</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
