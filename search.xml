@@ -776,42 +776,6 @@ dp[i]=max(dp[i-2]+dp[i-3])+nums[i]</script><p>注意边界条件，$dp[0]=0$，$
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/networking restart</span><br></pre></td></tr></table></figure>]]></content>
   </entry>
   <entry>
-    <title>求余和取模</title>
-    <url>/2020/08/21/%E6%B1%82%E4%BD%99%E5%92%8C%E5%8F%96%E6%A8%A1/</url>
-    <content><![CDATA[<p>今天写题的时候遇到了两个异号数进行%运算的情形，研究了一下才发现求余和取模是不一样的。</p>
-<a id="more"></a>
-<h3 id="计算公式"><a href="#计算公式" class="headerlink" title="计算公式"></a>计算公式</h3><p>A、B分别为被除数和除数。</p>
-<p>当A可以被B整除时，二者结果都为0。</p>
-<p>当A不可以被B整除时，令</p>
-<script type="math/tex; mode=display">
-C = [A/B]</script><script type="math/tex; mode=display">
-R = A - B*C</script><p>求余和取模都是求满足条件的R。但二者差别在于：</p>
-<p><strong>求余：使商C尽可能向0靠近。</strong></p>
-<p><strong>取模：使商C尽可能向负无穷靠近。</strong></p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>取</p>
-<script type="math/tex; mode=display">
-A = 7,\space B=3</script><p>考虑小数，则</p>
-<script type="math/tex; mode=display">
-C = A\space/\space B=7\space/\space 3 \approx 2.3</script><p>取整后，产生了两个可能的商 2 和 3 。2 更靠近 0 ，也更靠近负无穷，因此无论求余还是取模，商都应该取 2 ，因此</p>
-<script type="math/tex; mode=display">
-R = A-B*C=7-3*2=1</script><p>当A、B都取其相反数时同理。可以看出，<strong>当被除数和除数同号时，求余和取模的结果是一致的</strong>。</p>
-<p>若</p>
-<script type="math/tex; mode=display">
-A=7,\space B=-3</script><p>考虑小数，则</p>
-<script type="math/tex; mode=display">
-C = A\space/\space B=7\space/\space (-3) \approx -2.3</script><p>取整后，产生了两个可能的商 -2 和 -3 。由于 -2 更靠近 0 ，-3 更靠近负无穷，因此求余时商将取 -2，而取模时商将取 -3 。</p>
-<p>求余结果</p>
-<script type="math/tex; mode=display">
-R = A-B*C=7-(-3)*(-2)=1</script><p>取模结果</p>
-<script type="math/tex; mode=display">
-R = A-B*C=7-(-3)*(-3)=-2</script><p>当A、B都取相反数时同理。可以看出，<strong>当除数和被除数异号，求余和取模结果不一致</strong>。</p>
-<h3 id="简单的记忆方式"><a href="#简单的记忆方式" class="headerlink" title="简单的记忆方式"></a>简单的记忆方式</h3><p><strong>求余：</strong>余数和<strong>被除数</strong>同号。</p>
-<p><strong>取模：</strong>余数和<strong>除数</strong>同号。</p>
-<h3 id="不同语言中的"><a href="#不同语言中的" class="headerlink" title="不同语言中的%"></a>不同语言中的%</h3><p>C、C++、Java：求余</p>
-<p>Python：取模</p>
-]]></content>
-  </entry>
-  <entry>
     <title>机器学习 （1）绪论</title>
     <url>/2020/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%EF%BC%881%EF%BC%89%E7%BB%AA%E8%AE%BA/</url>
     <content><![CDATA[<p>积压了很久的🍉书笔记…</p>
@@ -895,6 +859,42 @@ R = A-B*C=7-(-3)*(-3)=-2</script><p>当A、B都取相反数时同理。可以看
       <tags>
         <tag>机器学习</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>求余和取模</title>
+    <url>/2020/08/21/%E6%B1%82%E4%BD%99%E5%92%8C%E5%8F%96%E6%A8%A1/</url>
+    <content><![CDATA[<p>今天写题的时候遇到了两个异号数进行%运算的情形，研究了一下才发现求余和取模是不一样的。</p>
+<a id="more"></a>
+<h3 id="计算公式"><a href="#计算公式" class="headerlink" title="计算公式"></a>计算公式</h3><p>A、B分别为被除数和除数。</p>
+<p>当A可以被B整除时，二者结果都为0。</p>
+<p>当A不可以被B整除时，令</p>
+<script type="math/tex; mode=display">
+C = [A/B]</script><script type="math/tex; mode=display">
+R = A - B*C</script><p>求余和取模都是求满足条件的R。但二者差别在于：</p>
+<p><strong>求余：使商C尽可能向0靠近。</strong></p>
+<p><strong>取模：使商C尽可能向负无穷靠近。</strong></p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>取</p>
+<script type="math/tex; mode=display">
+A = 7,\space B=3</script><p>考虑小数，则</p>
+<script type="math/tex; mode=display">
+C = A\space/\space B=7\space/\space 3 \approx 2.3</script><p>取整后，产生了两个可能的商 2 和 3 。2 更靠近 0 ，也更靠近负无穷，因此无论求余还是取模，商都应该取 2 ，因此</p>
+<script type="math/tex; mode=display">
+R = A-B*C=7-3*2=1</script><p>当A、B都取其相反数时同理。可以看出，<strong>当被除数和除数同号时，求余和取模的结果是一致的</strong>。</p>
+<p>若</p>
+<script type="math/tex; mode=display">
+A=7,\space B=-3</script><p>考虑小数，则</p>
+<script type="math/tex; mode=display">
+C = A\space/\space B=7\space/\space (-3) \approx -2.3</script><p>取整后，产生了两个可能的商 -2 和 -3 。由于 -2 更靠近 0 ，-3 更靠近负无穷，因此求余时商将取 -2，而取模时商将取 -3 。</p>
+<p>求余结果</p>
+<script type="math/tex; mode=display">
+R = A-B*C=7-(-3)*(-2)=1</script><p>取模结果</p>
+<script type="math/tex; mode=display">
+R = A-B*C=7-(-3)*(-3)=-2</script><p>当A、B都取相反数时同理。可以看出，<strong>当除数和被除数异号，求余和取模结果不一致</strong>。</p>
+<h3 id="简单的记忆方式"><a href="#简单的记忆方式" class="headerlink" title="简单的记忆方式"></a>简单的记忆方式</h3><p><strong>求余：</strong>余数和<strong>被除数</strong>同号。</p>
+<p><strong>取模：</strong>余数和<strong>除数</strong>同号。</p>
+<h3 id="不同语言中的"><a href="#不同语言中的" class="headerlink" title="不同语言中的%"></a>不同语言中的%</h3><p>C、C++、Java：求余</p>
+<p>Python：取模</p>
+]]></content>
   </entry>
   <entry>
     <title>下岗工人的碎碎念</title>
