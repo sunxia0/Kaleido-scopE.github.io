@@ -937,4 +937,83 @@ R = A-B*C=7-(-3)*(-3)=-2</script><p>当A、B都取相反数时同理。可以看
         <tag>随笔</tag>
       </tags>
   </entry>
+  <entry>
+    <title>使用Systemd进行自动部署</title>
+    <url>/2021/02/25/%E4%BD%BF%E7%94%A8Systemd%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p>作为实验室项目服务器的运 (bei) 维 (guo) 工 (xia) ，我长期经受着各种各样dirty工作的鞭打：频繁bug导致的重新部署、机房莫名奇妙的断电、nohup运行不优雅…</p>
+<p>终于，在又一次因机房断电重启服务后我决定做点什么来减轻一下自己的压力。于是我注意到了Systemd。</p>
+<a id="more"></a>
+<h3 id="什么是Systemd？"><a href="#什么是Systemd？" class="headerlink" title="什么是Systemd？"></a>什么是Systemd？</h3><p>早期Linux使用SysVinit来做系统初始化，然而其具有着串行启动、功能单一诸多局限性，于是Systemd应运而生。它为系统的启动和管理提供了一套完整的解决方案。</p>
+<p>Systemd可以管理所有的系统资源，不同资源统称为Unit。Unit共12种，包括</p>
+<ul>
+<li>service: 系统服务</li>
+<li>target: 多个unit构成的组</li>
+<li>device: 硬件设备</li>
+<li>mount: 文件系统的挂载点</li>
+<li>automount: 自动挂载点</li>
+<li>path: 文件或路径</li>
+<li>scope: 不是由Systemd启动的外部进程</li>
+<li>slice: 进程组</li>
+<li>snapshot: Systemd快照，可以切回某个快照</li>
+<li>socket: 进程间通信的socket</li>
+<li>swap: swap文件</li>
+<li>timer: 定时器</li>
+</ul>
+<p>Systemd包括了一系列命令，本次使用到了<code>systemctl</code>和<code>journalctl</code>，前者为Systemd的主命令，后者用于操作Systemd的日志服务。下面是二者一些常用的命令。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># systemctl常用命令</span></span><br><span class="line"><span class="comment"># 启动指定的服务</span></span><br><span class="line">systemctl start foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭指定的服务</span></span><br><span class="line">systemctl stop foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启指定的服务</span></span><br><span class="line">systemctl restart foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重载指定的服务（支持时）</span></span><br><span class="line">systemctl reload foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定服务的状态</span></span><br><span class="line">systemctl status foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示指定unit的所有底层参数</span></span><br><span class="line">systemctl show foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定服务的描述</span></span><br><span class="line">systemctl cat foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在下次启动时或满足其他触发条件时设置服务为启用</span></span><br><span class="line">systemctl <span class="built_in">enable</span> foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在下次启动时或满足其他触发条件时设置服务为禁用</span></span><br><span class="line">systemctl <span class="built_in">disable</span> foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出可启动或停止的服务列表</span></span><br><span class="line">systemctl list-unit-files --<span class="built_in">type</span>=service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务配置变更时使用</span></span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># journalctl常用命令</span></span><br><span class="line"><span class="comment"># 查看所有日志</span></span><br><span class="line">journalctl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定时间的日志</span></span><br><span class="line">journalctl --since <span class="string">&quot;20 min ago&quot;</span></span><br><span class="line">journalctl --since=<span class="string">&quot;2012-10-30 18:17:16&quot;</span></span><br><span class="line">journalctl --since yesterday</span><br><span class="line">journalctl --since <span class="string">&quot;2015-01-10&quot;</span> --until <span class="string">&quot;2015-01-11 03:00&quot;</span></span><br><span class="line">journalctl --since 09:00 --until <span class="string">&quot;1 hour ago&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看实时滚动的日志</span></span><br><span class="line">journalctl -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定Unit的日志</span></span><br><span class="line">journalctl -u foo.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示日志占据的硬盘空间</span></span><br><span class="line">journalctl --disk-usage</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日志文件占据的最大空间</span></span><br><span class="line">journalctl --vacuum-size=500M</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日志文件的最长保存时间</span></span><br><span class="line">journalctl --vacuum-time=2d</span><br></pre></td></tr></table></figure>
+<h3 id="service编写"><a href="#service编写" class="headerlink" title="service编写"></a>service编写</h3><p>服务器上需要配置的是一个前后端分离的web项目，二者独立更新，因此为二者分别编写service是更加灵活的选择。</p>
+<p>前端服务的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># service-pattern-frontend.service</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Service Pattern System Frontend  <span class="comment"># 服务描述</span></span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">TimeoutStartSec=150  <span class="comment"># Start的最长等待时间</span></span><br><span class="line">WorkingDirectory=/home/cbs/workspace/servicesysclient  <span class="comment"># 工作目录</span></span><br><span class="line">ExecStartPre=/usr/<span class="built_in">local</span>/bin/npm run build  <span class="comment"># Start前先执行build</span></span><br><span class="line">ExecStart=/home/cbs/.yarn/bin/serve -s build -l 6052  <span class="comment"># 启动监听</span></span><br><span class="line">ExecStop=/bin/<span class="built_in">kill</span> -INT <span class="variable">$MAINPID</span>  <span class="comment"># 使用SIGINT结束服务器的监听</span></span><br><span class="line">RestartSec=15  <span class="comment"># 重启前等待时间</span></span><br><span class="line">Restart=on-failure  <span class="comment"># 重启策略</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>后端服务的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># service-pattern-backend.service</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Service Pattern System Backend  <span class="comment"># 服务描述</span></span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">WorkingDirectory=/home/cbs/workspace/servicesysserver  <span class="comment"># 工作目录</span></span><br><span class="line">ExecStart=/home/cbs/anaconda3/bin/python manage.py runserver 0.0.0.0:6051  <span class="comment"># 启动Django</span></span><br><span class="line">ExecStop=/bin/<span class="built_in">kill</span> -TERM <span class="variable">$MAINPID</span>  <span class="comment"># 使用SIGTERM结束服务器的监听</span></span><br><span class="line">RestartSec=15  <span class="comment"># 重启前等待时间</span></span><br><span class="line">Restart=on-failure  <span class="comment"># 重启策略</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>简要介绍一下这两个service文件。首先看二者的相同部分</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># foo.service</span></span><br><span class="line">[Unit]</span><br><span class="line">...</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>[Unit]中的<code>After=network.target</code>表示当前服务需要在启动network.target之后才能启动。不过，由于项目中的前后端都跑在私有地址上，再通过端口映射暴露到外网，根据<a href="https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/">NetWorkTarget</a>，不添加这一设置也是可行的，后面可以找时间再测试一下。</p>
+<p>[Install]中定义了<code>WantedBy=multi-user.target</code>，这一配置是服务实现开机自启动的关键。当执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> foo.service</span><br></pre></td></tr></table></figure>
+<p>时，<code>foo.service</code>将在<code>/etc/systemd/system/multi-user.target.wants</code>下创建一个符号链接。在终端环境下，<code>multi-user.target</code>是默认的启动target，这个组里的所有服务都将开机启动。</p>
+<h3 id="配置流程"><a href="#配置流程" class="headerlink" title="配置流程"></a>配置流程</h3><p>以前端的<code>service-pattern-frontend.service</code>为例，记录一下完整的配置流程。</p>
+<p>首先创建.service文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">touch service-pattern-frontend.service</span><br></pre></td></tr></table></figure>
+<p>并填入上面的配置内容。</p>
+<p>接着执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo cp service-pattern-frontend.service /etc/systemd/system</span><br></pre></td></tr></table></figure>
+<p>将文件拷入保存service的目录中。</p>
+<p>此时输入<code>systemctl cat service-pattern-frontend.service</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) cbs@ubuntu:/$ systemctl cat service-pattern-frontend.service </span><br><span class="line"><span class="comment"># /etc/systemd/system/service-pattern-frontend.service</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Service Pattern System Frontend</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">TimeoutStartSec=150</span><br><span class="line">WorkingDirectory=/home/cbs/workspace/servicesysclient</span><br><span class="line">ExecStartPre=/usr/<span class="built_in">local</span>/bin/npm run build</span><br><span class="line">ExecStart=/home/cbs/.yarn/bin/serve -s build -l 6052</span><br><span class="line">ExecStop=/bin/<span class="built_in">kill</span> -INT <span class="variable">$MAINPID</span></span><br><span class="line">RestartSec=15</span><br><span class="line">Restart=on-failure</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>已经可以看到配置文件的内容。</p>
+<p>之后执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl start service-pattern-frontend.service</span><br></pre></td></tr></table></figure>
+<p>启动服务。</p>
+<p><code>npm run build</code>的时间较长，因此在配置中额外设置了<code>TimeoutStartSec</code>，延长了等待时间。若未设置这一字段，Systemd将采用在<code>/etc/systemd/system.conf</code>中定义的<code>DefaultTimeoutStartSec=90s</code>。采用默认值可能使得<code>npm run build</code>来不及完成。</p>
+<p>启动成功后，输入<code>systemctl status service-pattern-frontend.service</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) cbs@ubuntu:/$ systemctl status service-pattern-frontend.service</span><br><span class="line">● service-pattern-frontend.service - Service Pattern System Frontend</span><br><span class="line">   Loaded: loaded (/etc/systemd/system/service-pattern-frontend.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Fri 2021-02-26 01:26:48 CST; 14h ago</span><br><span class="line">  Process: 26222 ExecStartPre=/usr/<span class="built_in">local</span>/bin/npm run build (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 26422 (node)</span><br><span class="line">    Tasks: 11 (<span class="built_in">limit</span>: 4915)</span><br><span class="line">   CGroup: /system.slice/service-pattern-frontend.service</span><br><span class="line">           └─26422 node /home/cbs/.yarn/bin/serve -s build -l 6052</span><br><span class="line"></span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: You can also analyze the project dependencies: https://goo.gl/LeUzfb</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: The project was built assuming it is hosted at /.</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: You can control this with the homepage field <span class="keyword">in</span> your package.json.</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: The build folder is ready to be deployed.</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: You may serve it with a static server:</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]:   serve -s build</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: Find out more about deployment here:</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]:   bit.ly/CRA-deploy</span><br><span class="line">Feb 26 01:26:48 ubuntu systemd[1]: Started Service Pattern System Frontend.</span><br><span class="line">Feb 26 01:26:48 ubuntu serve[26422]: INFO: Accepting connections at http://localhost:6052</span><br></pre></td></tr></table></figure>
+<p>可以看到前端服务已经启动成功。</p>
+<p>使用<code>journalctl -f -u service-pattern-frontend.service</code>可以查看启动日志</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) cbs@ubuntu:/$ journalctl -f -u service-pattern-frontend.service</span><br><span class="line">-- Logs begin at Fri 2020-07-31 12:30:45 CST. --</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: You can also analyze the project dependencies: https://goo.gl/LeUzfb</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: The project was built assuming it is hosted at /.</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: You can control this with the homepage field <span class="keyword">in</span> your package.json.</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: The build folder is ready to be deployed.</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: You may serve it with a static server:</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]:   serve -s build</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]: Find out more about deployment here:</span><br><span class="line">Feb 26 01:26:48 ubuntu npm[26222]:   bit.ly/CRA-deploy</span><br><span class="line">Feb 26 01:26:48 ubuntu systemd[1]: Started Service Pattern System Frontend.</span><br><span class="line">Feb 26 01:26:48 ubuntu serve[26422]: INFO: Accepting connections at http://localhost:6052</span><br></pre></td></tr></table></figure>
+<p>最后，使用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> service-pattern-frontend.service</span><br></pre></td></tr></table></figure>
+<p>设置开机自启动，配置完毕。</p>
+<p>若对service文件有任何修改，记得使用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+<p>重新载入配置文件。</p>
+<p>由于后端服务有一功能会有大量std输出，曾经出现过40多G的nohup.out，因此我还额外配置了一下日志可占据的最大空间</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo journalctl --vacuum-size=1G</span><br></pre></td></tr></table></figure>
+<p>之后进行代码更新时，只需要重启一次服务即可，不用再kill，serve二连。日志也有了统一管理的工具，不需要再去nohup.out里一行行找。更重要的是，不用再担心哪天机房断电我又被叫去重启服务了，好耶！</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">systemd.service</a></li>
+<li><a href="https://www.freedesktop.org/software/systemd/man/systemd.exec.html">systemd.exec</a></li>
+<li><a href="https://www.freedesktop.org/wiki/Software/systemd/FrequentlyAskedQuestions/">systemd/FAQ</a></li>
+<li><a href="https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget/">NetworkTarget</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程：命令篇</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd 入门教程：实战篇</a></li>
+<li><a href="https://blog.csdn.net/mrmengj/article/details/112306151">如何自定义自己的 systemd service 守护进程</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/linux/1407_liuming_init3/index.html">浅析 Linux 初始化 init 系统: Systemd</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
