@@ -347,9 +347,11 @@ INT\_MIN = INT\_MAX+1</script><h3 id="INT-MAX和INT-MIN的获得"><a href="#INT-
 <li><p><strong>静态方法（JDK1.8及以后）</strong></p>
 <p>如staticMethod的定义所示。<strong>不可以被继承</strong>。接口中的静态方法必须通过接口名访问，如</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Interface1.staticMethod();</span><br></pre></td></tr></table></figure>
-<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3></li>
+</li>
 </ol>
 </li>
+</ul>
+<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><ul>
 <li><p><strong>成员内部类</strong></p>
 <ul>
 <li>定义为外部类的一个成员</li>
