@@ -224,13 +224,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>1.4k</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -267,6 +267,20 @@
 
 </li>
 </ul>
+<h2 id="Editors-Vim"><a href="#Editors-Vim" class="headerlink" title="Editors (Vim)"></a>Editors (Vim)</h2><p>这节讲了Vim的一些基本操作，学习一下可以极大提升命令行环境下的工作效率。各种快捷键就不在此赘述（vimtutor是个好东西）。</p>
+<p>这里记录一下一个Demo的修改过程。如下是一个有问题的fizz buzz实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fizz.py</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fizz_buzz</span>(<span class="params">limit</span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(limit):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">3</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;fizz&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">5</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;fizz&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">3</span> <span class="keyword">and</span> i % <span class="number">5</span>:</span><br><span class="line">            print(i)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    fizz_buzz(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li><code>main</code> 方法没有调用<br><code>vim fizz.py</code><br>输入 <code>G</code> 到底文件尾<br>输入 <code>o</code> 向后新增一行<br>输入 <code>main</code> 方法调用代码<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></li>
+<li><code>fizz_buzz</code> 方法中的循环从0开始<br>输入 <code>3G</code> 跳到第3行<br>输入 <code>%</code> 跳到 <code>(limit)</code> 尾<br>输入 <code>b</code> 向前跳1个词<br>输入 <code>i</code> ，将代码变为<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, limit+<span class="number">1</span>):</span><br></pre></td></tr></table></figure></li>
+<li>5的倍数打印的是”fizz”<br>输入 <code>7G</code> 跳到第7行<br>输入 <code>ci&#39;</code> 清除”fizz”<br>输入”buzz”</li>
+<li>15的倍数打印的”fizz”和”buzz”在两行<br>输入 <code>5G</code> 跳到第5行<br>输入 <code>$</code> 跳到行尾<br>输入 <code>i</code> ，将代码变为<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&#x27;fizz&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+输入 <code>7G</code> 跳到第7行<br>输入 <code>$</code> 跳到行尾<br>输入 <code>.</code> 重复第五行的编辑</li>
+<li><code>main</code> 方法中的10是硬编码<br>输入 <code>2G</code> 跳到第2行<br>输入 <code>O</code> 在前新增一行，添加<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+输入 <code>14G</code> 跳到第14行<br>输入 <code>%</code> 跳到 <code>(10)</code> 尾<br>输入 <code>ci(</code> 清除并编辑括号内内容，改为<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fizz_buzz(<span class="built_in">int</span>(sys.argv[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+修改后的文件内容为<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fizz.py</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fizz_buzz</span>(<span class="params">limit</span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, limit+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">3</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;fizz&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">5</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;buzz&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">3</span> <span class="keyword">and</span> i % <span class="number">5</span>:</span><br><span class="line">            print(i)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    fizz_buzz(<span class="built_in">int</span>(sys.argv[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
     </div>
 
@@ -344,7 +358,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Course-overview-the-shell"><span class="nav-number">1.</span> <span class="nav-text">Course overview + the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Tools-and-Scripting"><span class="nav-number">2.</span> <span class="nav-text">Shell Tools and Scripting</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Course-overview-the-shell"><span class="nav-number">1.</span> <span class="nav-text">Course overview + the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Tools-and-Scripting"><span class="nav-number">2.</span> <span class="nav-text">Shell Tools and Scripting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Editors-Vim"><span class="nav-number">3.</span> <span class="nav-text">Editors (Vim)</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
