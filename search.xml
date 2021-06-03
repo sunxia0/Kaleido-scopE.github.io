@@ -1031,19 +1031,19 @@ R = A-B*C=7-(-3)*(-3)=-2</script><p>当A、B都取相反数时同理。可以看
 <li><p>编写两个bash函数 <code>marco</code> 和 <code>polo</code> 执行下面的操作。 每当你执行 <code>marco</code> 时，当前的工作目录应当以某种形式保存，当执行 <code>polo</code> 时，无论现在处在什么目录下，都应当 <code>cd</code> 回到当时执行 <code>marco</code> 的目录。 为了方便debug，你可以把代码写在单独的文件 <code>marco.sh</code> 中，并通过 <code>source marco.sh</code> 命令，（重新）加载函数。<br><strong>解答：</strong><br><em>macro.sh</em></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"><span class="function"><span class="title">macro</span></span> () &#123;</span><br><span class="line">    <span class="built_in">export</span> MACRO_DIR=$(<span class="built_in">pwd</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">polo</span></span> () &#123;</span><br><span class="line">    <span class="built_in">cd</span> <span class="variable">$MACRO_DIR</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行过程</p>
-<center><img src="/2021/03/15/Missing-CSE-Homework/1.png" width="60%"></center>
+<center><img src="/2021/03/15/Missing-CSE-Homework/1.png" width="45%"></center>
 </li>
 <li><p>假设您有一个命令，它很少出错。因此为了在出错时能够对其进行调试，需要花费大量的时间重现错误并捕获输出。 编写一段bash脚本，运行如下的脚本直到它出错，将它的标准输出和标准错误流记录到文件，并在最后输出所有内容。 加分项：报告脚本在失败前共运行了多少次。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line">  </span><br><span class="line">n=$(( RANDOM % <span class="number">100</span> ))</span><br><span class="line">  </span><br><span class="line"><span class="keyword">if</span> [[ n -eq 42 ]]; <span class="keyword">then</span></span><br><span class="line">   <span class="built_in">echo</span> <span class="string">&quot;Something went wrong&quot;</span></span><br><span class="line">   &gt;&amp;2 <span class="built_in">echo</span> <span class="string">&quot;The error was using magic numbers&quot;</span></span><br><span class="line">   <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">  </span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Everything went according to plan&quot;</span></span><br></pre></td></tr></table></figure>
 <p><strong>解答：</strong><br>将上述内容写入 <code>script.sh</code>，创建 <code>test.sh</code> ，写入</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">status=0</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [[ <span class="variable">$status</span> -eq 0 ]]; <span class="keyword">do</span></span><br><span class="line">    ./script.sh &gt;&gt; out 2&gt;&gt; err</span><br><span class="line">    status=$?</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="subst">$(wc -l out)</span> before error.&quot;</span></span><br></pre></td></tr></table></figure>
 <p>运行过程</p>
-<center><img src="/2021/03/15/Missing-CSE-Homework/2.png" width="100%"></center>
+<center><img src="/2021/03/15/Missing-CSE-Homework/2.png" width="70%"></center>
 </li>
 <li><p>编写一个命令，它可以递归地查找文件夹中所有的HTML文件，并将它们压缩成zip文件。注意，即使文件名中包含空格，您的命令也应该能够正确执行（提示：查看 <code>xargs</code> 的参数 <code>-d</code> ）<br><strong>解答：</strong><br>懒得找有HTML的文件夹，就用 <code>.sh</code> 文件代替了。创建文件 <code>zipsh</code> ，写入</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">find <span class="variable">$1</span> -name <span class="string">&#x27;*.sh&#x27;</span> -print0 | xargs -0 zip -r sh.zip</span><br></pre></td></tr></table></figure>
 <p>运行过程</p>
-<center><img src="/2021/03/15/Missing-CSE-Homework/3.png" width="100%"></center>
+<center><img src="/2021/03/15/Missing-CSE-Homework/3.png" width="70%"></center>
 
 </li>
 </ul>
