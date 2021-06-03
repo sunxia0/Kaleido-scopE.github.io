@@ -224,13 +224,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>2.4k</span>
+              <span>6.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>2 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -279,9 +279,54 @@
 <li><code>main</code> 方法中的10是硬编码<br>输入 <code>2G</code> 跳到第2行<br>输入 <code>O</code> 在前新增一行，添加<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 输入 <code>14G</code> 跳到第14行<br>输入 <code>%</code> 跳到 <code>(10)</code> 尾<br>输入 <code>ci(</code> 清除并编辑括号内内容，改为<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fizz_buzz(<span class="built_in">int</span>(sys.argv[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
 修改后的文件内容为<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fizz.py</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fizz_buzz</span>(<span class="params">limit</span>):</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, limit+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">3</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;fizz&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">5</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">&#x27;buzz&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">3</span> <span class="keyword">and</span> i % <span class="number">5</span>:</span><br><span class="line">            print(i)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    fizz_buzz(<span class="built_in">int</span>(sys.argv[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="Data-Wrangling"><a href="#Data-Wrangling" class="headerlink" title="Data Wrangling"></a>Data Wrangling</h2></li>
 </ol>
-
+<p>这节介绍了“Data Wrangling”。所谓“Data Wrangling”，描述的是通过一系列操作从原始数据中过滤得到我们需要的数据。在类Unix系统上，这通常可以通过一系列命令和管道来完成。</p>
+<ul>
+<li><p>完成 <a target="_blank" rel="noopener" href="https://regexone.com/">short interactive regex tutorial</a><br>这是一个循序渐进的Regex教程，这里记录一下答案</p>
+<ol>
+<li>匹配三个字符串 <code>abcdefg</code> / <code>abcde</code> / <code>abc</code><br><strong><code>abc[d-g]*</code></strong></li>
+<li>匹配 <code>abc123xyz</code> / <code>define &quot;123&quot;</code> / <code>var g = 123;</code> 中的所有数字<br><strong><code>\d+</code>，或者暴力的 <code>123</code></strong></li>
+<li>匹配 <code>cat.</code> / <code>896.</code> / <code>?=+.</code> 但不匹配 <code>abc1</code><br><strong><code>.&#123;3&#125;\.</code>，或 <code>...\.</code></strong></li>
+<li>匹配 <code>can</code> / <code>man</code> / <code>fan</code> 但不匹配 <code>dan</code> / <code>ran</code> / <code>pan</code><br><strong><code>[cmf]an</code>，或者 <code>[^drp]an</code></strong></li>
+<li>匹配 <code>hog</code> / <code>dog</code> 但不匹配 <code>bog</code><br><strong><code>[hd]og</code>，或者 <code>[^b]og</code></strong></li>
+<li>匹配 <code>Ana</code> / <code>Bob</code> / <code>Cpc</code> 但不匹配 <code>aax</code> / <code>bby</code> / <code>ccz</code><br><strong><code>[A-C][n-p][a-c]</code></strong></li>
+<li>匹配 <code>wazzzzzup</code> / <code>wazzzup</code> 但不匹配 <code>wazup</code><br><strong><code>waz&#123;2,&#125;up</code></strong></li>
+<li>匹配 <code>aaaabcc</code> / <code>aabbbbc</code> / <code>aacc</code> / <code>a</code><br><strong><code>a+b*c+</code></strong></li>
+<li>匹配 <code>1 file found?</code> / <code>2 files found?</code> / <code>24 files found?</code> 但不匹配 <code>No files found.</code><br><strong><code>\d+ files? found\?</code></strong></li>
+<li>匹配 <code>1.⊔⊔⊔abc</code> / <code>2.⊔(tab)abc</code> / <code>3.⊔⊔⊔⊔⊔⊔⊔⊔⊔⊔⊔abc</code> 但不匹配 <code>4.abc</code><br><strong><code>\d\.\s+abc</code></strong></li>
+<li>匹配 <code>Mission: successful</code> 但不匹配 <code>Last Mission: unsuccessful</code> / <code>Next Mission: successful upon capture of target</code><br><strong><code>^Mission: successful$</code></strong></li>
+<li>捕获 <code>file_record_transcript.pdf</code> / <code>file_07241999.pdf</code> 中的文件命，但不匹配 <code>testfile_fake.pdf.tmp</code><br><strong><code>^(file.+)\.pdf$</code></strong></li>
+<li>捕获 <code>Jan 1987</code> / <code>May 1969</code> / <code>Aug 2011</code> 中的整个日期和年份（两个捕获组）<br><strong><code>(\w+ (\d+))</code></strong></li>
+<li>捕获 <code>1280x720</code> / <code>1920x1600</code> / <code>1024x768</code> 等分辨率中的宽和高<br><strong><code>(\d+)x(\d+)</code></strong></li>
+<li>匹配 <code>I love cats</code> / <code>I love dogs</code> 但不匹配 <code>I love logs</code> / <code>I love cogs</code><br><strong><code>I love (cat|dog)s</code></strong></li>
+<li>匹配 <code>The quick brown fox jumps over the lazy dog.</code> / <code>There were 614 instances of students getting 90.0% or above.</code> / <code>The FCC had to censor the network for saying &amp;$#*@!.</code><br><strong>偷懒的<code>.*</code>，或<code>^The(re)? (.+( |\.))+$</code></strong></li>
+<li>匹配 <code>3.14529</code> / <code>-255.34</code> / <code>128</code> / <code>1.9e10</code> / <code>123,340.00</code> 但不匹配 <code>720p</code><br><strong><code>^\-?(\d,?)+\.?\d+(e\d+)?$</code> 或 <code>^\-?\d+(,\d+)*(\.\d+(e\d+)?)?$</code></strong></li>
+<li>捕获 <code>415-555-1234</code> / <code>650-555-2345</code> / <code>(416)555-3456</code> / <code>202 555 4567</code> / <code>4035555678</code> / <code>1 416 555 9292</code> 的区号，即 <code>415</code> / <code>650</code> / <code>416</code> / <code>202</code> / <code>403</code> / <code>416</code><br><strong><code>1?(\s|-)?\(?(\d&#123;3&#125;)\)?(\s|-)?\d&#123;3&#125;(\s|-)?\d&#123;4&#125;</code></strong></li>
+<li>捕获 <code>tom@hogwarts.com</code> / <code>tom.riddle@hogwarts.com</code> / <code>tom.riddle+regexone@hogwarts.com</code> / <code>tom@hogwarts.eu.com</code> / <code>potter@hogwarts.com</code> / <code>harry@hogwarts.com</code> / <code>hermione+regexone@hogwarts.com</code> 中的用户名<br><strong><code>^(\w+(\.\w+)*)(\+\w+)*@\w+(\.\w+)+$</code></strong></li>
+<li>捕获 <code>&lt;a&gt;This is a link&lt;/a&gt;</code> / <code>&lt;a href=&#39;https://regexone.com&#39;&gt;Link&lt;/a&gt;</code> / <code>&lt;div class=&#39;test_style&#39;&gt;Test&lt;/div&gt;</code> / <code>&lt;div&gt;Hello &lt;span&gt;world&lt;/span&gt;&lt;/div&gt;</code> 中的HTML标签<br><strong><code>&lt;(\w+)( \w+=\&#39;.+\&#39;)*&gt;.*&lt;/(\w+)&gt;</code></strong></li>
+<li>捕获下列文件中图片文件的文件名和扩展名，且不匹配其他文件名：<br><code>.bash_profile</code> / <code>workspace.doc</code> / <code>img0912.jpg</code> / <code>updated_img0912.png</code> / <code>documentation.html</code> / <code>favicon.gif</code> / <code>img0912.jpg.tmp</code> / <code>access.lock</code><br><strong><code>^(\w+)\.((jpg)|(png)|(gif))$</code></strong></li>
+<li>去掉字符串头尾的空白符，捕获文本内容：<code>⊔(tab)⊔(tab)⊔(tab)The quick brown fox...</code> / <code>⊔⊔jumps over the lazy dog.</code><br><strong><code>^\s*(.*)\s*$</code></strong></li>
+<li>捕获下列日志中的文件名、方法名、行号：<br><code>E/( 1553):   at widget.List.makeView(ListView.java:1727)</code><br><code>E/( 1553):   at widget.List.fillDown(ListView.java:652)</code><br><code>E/( 1553):   at widget.List.fillFrom(ListView.java:709)</code><br>跳过：<br><code>W/dalvikvm( 1553): threadid=1: uncaught exception</code><br><code>E/( 1553): FATAL EXCEPTION: main</code><br><code>E/( 1553): java.lang.StringIndexOutOfBoundsException</code><br><strong><code>[A-Z]/\( \d+\):   at \w+\.\w+\.(\w+)\((\w+\.\w+):(\d+)\)</code></strong></li>
+<li>捕获下列URL中的协议名、主机、端口：<br><code>ftp://file_server.com:21/top_secret/life_changing_plans.pdf</code><br><code>https://regexone.com/lesson/introduction#section</code><br><code>file://localhost:4040/zip_file</code><br><code>https://s3cur3-server.com:9999/</code><br><code>market://search/angry%20birds</code><br><strong><code>^(\w+)://([\w\-\.]+)(:(\d+))?</code></strong></li>
+</ol>
+</li>
+<li><p>从 <code>/usr/share/dict/words</code> 找出包含至少3个<code>a</code>，且不以<code>s</code>结尾的单词：</p>
+<ol>
+<li>出现次数排名前三的最后两位字母的组合是？这些两位字母组合的个数？<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /usr/share/dict/words | grep -E <span class="string">&#x27;^(.*a.*)&#123;3&#125;.*[^s]$&#x27;</span> | sed -E <span class="string">&#x27;s/.*(..)$/\1/&#x27;</span> | sort | uniq -c | sort -r</span><br><span class="line">| head -n3</span><br></pre></td></tr></table></figure>
+<code>cat /usr/share/dict/words</code> 打印出文件中的所有单词<br><code>grep -E &#39;^(.*a.*)&#123;3&#125;.*[^s]$&#39;</code> 匹配出其中包含至少3个<code>a</code>，且不以<code>s</code>结尾的单词<br><code>sed -E &#39;s/.*(..)$/\1/&#39;</code> 使用正则替换，提取出这些单词的最后两位字母<br><code>sort | uniq -c</code> 将字母组合排序，合并重复项且计数<br><code>sort -r | head -n3</code> 以出现次数为key逆序排序，并提取出现次数前三名的组合</li>
+<li>哪些两位字母组合没有出现？<br><a target="_blank" rel="noopener" href="https://www.reddit.com/r/commandline/comments/i2tnf4/problem_find_twoletter_combinations_that_do_not/">学习自这里</a><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">comm -13</span><br><span class="line">&lt;(cat /usr/share/dict/words | grep -E <span class="string">&#x27;^(.*a.*)&#123;3&#125;.*[^s]$&#x27;</span> | sed -E <span class="string">&#x27;s/.*(..)$/\1/&#x27;</span> | sort -u) </span><br><span class="line">&lt;(<span class="built_in">echo</span> &#123;a..z&#125;&#123;a..z&#125; | tr <span class="string">&quot; &quot;</span> <span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>使用 <code>sed</code> 进行原地替换是一个很有诱惑力的选择，如 <code>sed s/REGEX/SUBSTITUTION/ input.txt &gt; input.txt</code> 。但这条命令是无法实现目标的，为什么？是否仅对 <code>sed</code> 命令有此限制？查询 <code>sed</code> 的文档，找到原地替换的方法。<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/5171901/find-and-replace-in-file-and-overwrite-file-doesnt-work-it-empties-the-file">学习自这里</a></p>
+<blockquote>
+<p>When the shell sees &gt; index.html in the command line it opens the file index.html for writing, wiping off all its previous contents.</p>
+</blockquote>
+<p>简言之，在 <code>sed</code> 真正执行前，重定向已经将文件内容清空了。因此这一问题不仅仅只针对 <code>sed</code> ，其他命令同样无法通过这一操作进行原地修改。</p>
+<p><code>sed</code> 的 <code>-i</code> 选项提供了原地替换，上面的语句应写为：<br><code>sed -i &#39;.tmp&#39; s/REGEX/SUBSTITUTION/ input.txt</code><br>这一语句在执行原地替换前会先生成一个后缀为 <code>.tmp</code> 的备份文件。如果使用 <code>-i &#39;&#39;</code> ，则不会生成任何中间文件。</p>
+</li>
+</ul>
+<h2 id="Command-line-Environment"><a href="#Command-line-Environment" class="headerlink" title="Command-line Environment"></a>Command-line Environment</h2>
     </div>
 
     
@@ -358,7 +403,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Course-overview-the-shell"><span class="nav-number">1.</span> <span class="nav-text">Course overview + the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Tools-and-Scripting"><span class="nav-number">2.</span> <span class="nav-text">Shell Tools and Scripting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Editors-Vim"><span class="nav-number">3.</span> <span class="nav-text">Editors (Vim)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Course-overview-the-shell"><span class="nav-number">1.</span> <span class="nav-text">Course overview + the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Tools-and-Scripting"><span class="nav-number">2.</span> <span class="nav-text">Shell Tools and Scripting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Editors-Vim"><span class="nav-number">3.</span> <span class="nav-text">Editors (Vim)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Wrangling"><span class="nav-number">4.</span> <span class="nav-text">Data Wrangling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-line-Environment"><span class="nav-number">5.</span> <span class="nav-text">Command-line Environment</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
