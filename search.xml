@@ -1108,4 +1108,44 @@ R = A-B*C=7-(-3)*(-3)=-2</script><p>当A、B都取相反数时同理。可以看
 </ul>
 <h2 id="Command-line-Environment"><a href="#Command-line-Environment" class="headerlink" title="Command-line Environment"></a>Command-line Environment</h2>]]></content>
   </entry>
+  <entry>
+    <title>How to be a good engineer</title>
+    <url>/2021/06/17/How-to-be-a-good-engineer/</url>
+    <content><![CDATA[<p>来自美团技术团队的两篇关于工程师成长的博客</p>
+<a id="more"></a>
+<h3 id="写给工程师的十条精进原则"><a href="#写给工程师的十条精进原则" class="headerlink" title="写给工程师的十条精进原则"></a>写给工程师的十条精进原则</h3><p>本文来自一位工作8年的技术Leader。他总结了自己工作以来犯过的和团队同学犯过的一些错误，并提供了十条帮助工程师解决工作中所遇到问题的原则。</p>
+<ol>
+<li><strong>Owner意识</strong><br>对自己对工作负责、积极主动的推动相关的工作</li>
+<li><strong>时间观念</strong><br>工作要有计划性：做好任务拆解、时间安排外<br>工作要分清主次：运用四象限法</li>
+<li><strong>Begin With The End In Mind</strong><br>开始一件事情前一定要带着明确的目标，设立事情的边界<br>同样适用于技术学习</li>
+<li><p><strong>闭环思维</strong></p>
+<blockquote>
+<p>真正的闭环，要求我们对工作中的事情都能够养成良好的思维习惯，沟通要有结论，通知要有反馈，To Do要有验收。</p>
+</blockquote>
+<p>凡事有交代，保持反馈 </p>
+</li>
+<li><strong>保持敬畏</strong><br>对组内规章制度的遵循，包括编码规范、上线流程等<br>如果认为某些制度有问题，可以提出来和组内同事一起讨论，看是否可以优化</li>
+<li><strong>事不过二</strong><br>作者组内的评审和问题讨论不超过两次<br>通过设置强制性的原则提高相关环节的效率，减少无意义的内耗，保证每次的沟通都是有效的</li>
+<li><strong>设计优先</strong><br>重视设计文档的编写。良好的设计可以保证系统开发的可持续。</li>
+<li><strong>P/PC平衡</strong><br>即产出/产能平衡<br>在保证工作产出的同时应保证自身的良性发展（技术沉淀、身体健康、软实力）</li>
+<li><strong>善于提问</strong><br>不要想当然，不要怕麻烦他人，多问是提高工作效率的一大利器</li>
+<li><strong>空杯心态</strong><br>时刻保持谦虚，从不同位置的同事处了解自己的问题</li>
+</ol>
+<h3 id="工作中如何做好技术积累"><a href="#工作中如何做好技术积累" class="headerlink" title="工作中如何做好技术积累"></a>工作中如何做好技术积累</h3><ul>
+<li><strong>学习的原则</strong><br>坚持 + 实践 + 交流 + 总结输出<br>做好规划。关于短期规划，需要设立一个基本时间单位（如一个月），按基本时间单位进行规划。规划时为每个目标设定下限，再具体到更细粒度的时间单位（如安排10天学习，10天旅行等）。逐层拆解，直到划分到每个任务可以较为轻松地完成。长期规划遵循三点：远离夕阳行业、跟随自己的兴趣、做好积累、边走边看，及时调整规划。</li>
+<li><strong>工作中的困惑</strong><ol>
+<li>知识是学不完的，因此学习时要抓住核心，把根本学精。例如许多加密技术最终源自素因数分解难题；从多核多CPU多线程到多机房，一致性问题最终都可归结到Paxos中的各种理论。相比“术”更应重视“道”。</li>
+<li>不要过于重技术、轻业务。基础技术并不一定就比业务团队高级，技术最终是服务于业务的。</li>
+<li>重视沟通技巧，通过提前沟通、抓住主题来努力实现有效沟通。</li>
+<li>时刻关注效率的提升，要有清晰的结果导向思维。</li>
+</ol>
+</li>
+<li><strong>架构师需要的能力</strong><br>L4: 团队管理能力<br>L3: 项目管理能力 在线运维能力<br>L2: 架构能力 性能优化能力<br>L1: 编程能力 调试能力 编译部署能力<br>上面的能力中层级越低的越基础，上层能力依赖下层能力</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><a href="https://tech.meituan.com/2018/08/16/10-principles-for-engineers.html">美团技术团队：写给工程师的十条精进原则</a></li>
+<li><a href="https://tech.meituan.com/2018/04/16/study-vs-work.html">美团技术团队：工作中如何做好技术积累</a></li>
+</ul>
+]]></content>
+  </entry>
 </search>
