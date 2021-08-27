@@ -239,7 +239,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="缓存淘汰算法"><a href="#缓存淘汰算法" class="headerlink" title="缓存淘汰算法"></a>缓存淘汰算法</h2><p>缓存是为了解决存储介质间读写速度相差过大而设置的一块大小有限的数据缓存区。经由缓存中转，可极大地提高数据的读写速度，从而提高系统性能。由于缓存大小有限，当存储的数据达到其大小限制时就需要淘汰掉其中一部分“价值最小”的数据，从而使其可以装入新的数据。这就是<strong>缓存淘汰算法</strong>的工作。缓存淘汰算法在计算机科学中应用十分广泛，从最底层的硬件到最上层的应用层都有着它的身影。例如缓和CPU和内存间速度差异的Cache，操作系统层的虚拟内存，应用层的缓存中间件等等。不同的评判数据价值的方式催生了不同的缓存淘汰算法，常见的有FIFO、LRU、LFU等。本次，我们结合两道题目分析LRU和LFU两种缓存淘汰算法。</p>
+        <h2 id="缓存淘汰算法"><a href="#缓存淘汰算法" class="headerlink" title="缓存淘汰算法"></a>缓存淘汰算法</h2><p>缓存是为了解决存储介质间读写速度相差过大而设置的一块大小有限的数据缓存区。经由缓存中转，可极大地提高数据的读写速度，从而提高系统性能。由于缓存大小有限，当存储的数据达到其大小限制时就需要淘汰掉其中一部分“价值最小”的数据，从而使其可以装入新的数据。这就是<strong>缓存淘汰算法</strong>的工作。缓存淘汰算法在计算机科学中应用十分广泛，从最底层的硬件到最上层的应用层都有着它的身影。例如缓和CPU和内存间速度差异的Cache，操作系统层的虚拟内存，应用层的缓存中间件等等。不同的评判数据价值的方式催生了不同的缓存淘汰算法，常见的有FIFO、LRU、LFU等。本文将结合两道题目分析LRU和LFU两种缓存淘汰算法。</p>
 <a id="more"></a>
 <h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>LRU的全称是<strong>Least Recently Used</strong>，即最近最少使用。该算法认为最近最少使用的数据块是“最没有价值的”，因此在每次缓存满时淘汰它。</p>
 <p>举个例子，当缓存容量为3，数据序列为 2 1 2 1 2 3 4 时，被淘汰的数据是1。</p>
@@ -378,7 +378,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sunxia0.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="不仅要写代码，还要写一手漂亮的代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Java Style Guide">
+<meta property="og:url" content="https://sunxia0.github.io/2021/08/25/Google-Java-Style-Guide/">
+<meta property="og:site_name" content="Phantasia">
+<meta property="og:description" content="不仅要写代码，还要写一手漂亮的代码">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-25T07:46:27.000Z">
+<meta property="article:modified_time" content="2021-08-25T07:46:27.000Z">
+<meta property="article:author" content="Xiao">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://sunxia0.github.io/2021/08/25/Google-Java-Style-Guide/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Google Java Style Guide | Phantasia</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Phantasia</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sunxia0.github.io/2021/08/25/Google-Java-Style-Guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Xiao">
+      <meta itemprop="description" content="一个平平无奇的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Phantasia">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Google Java Style Guide
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-25 15:46:27" itemprop="dateCreated datePublished" datetime="2021-08-25T15:46:27+08:00">2021-08-25</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>不仅要写代码，还要写一手漂亮的代码</p>
+<a id="more"></a>
+<h3 id="术语注释"><a href="#术语注释" class="headerlink" title="术语注释"></a>术语注释</h3><ol>
+<li><p><em>class(类)</em>，包括所有普通的类(class)、enum、interface或注解类型(<code>@interface</code>)</p>
+</li>
+<li><p><em>member(成员)</em>，包括类中的内部类(静态内部类)、变量、方法、构造方法(除初始化块和注释)</p>
+</li>
+<li><p><em>comment(注释)</em>，指实现时的解释性注释。对于文档注释，使用术语<em>Javadoc</em></p>
+</li>
+</ol>
+<h3 id="I-源文件基础"><a href="#I-源文件基础" class="headerlink" title="I. 源文件基础"></a>I. 源文件基础</h3><ol>
+<li><p>所有源文件都应以UTF-8编码</p>
+</li>
+<li><p>关于空白符</p>
+<ul>
+<li>除行终止符和字面字符串外，源文件中出现的空白符只能是<strong>ascii码为10的水平空格符</strong>。这意味着不应使用tab符做缩进。</li>
+<li>使用转义字符( <code>\b</code>, <code>\t</code>, <code>\n</code>, <code>\\</code> )等，而不是对应的八进制(如 <code>\012</code> )/Unicode(如 <code>\u000a</code>)转义</li>
+</ul>
+</li>
+<li><p>对于非ascii字符，要么使用实际上的Unicode字符(如 <code>∞</code> )，要么使用对应的Unicode转义(如 <code>\u221e</code> )。<br>建议使用前一种更方便理解的方法。当不得不使用Unicode转义时最好加上相应的注释</p>
+</li>
+</ol>
+<h3 id="II-源文件结构"><a href="#II-源文件结构" class="headerlink" title="II. 源文件结构"></a>II. 源文件结构</h3><p>每个源文件需要从上至下包含：</p>
+<ol>
+<li><p>License或Copywrite信息</p>
+</li>
+<li><p><code>package</code>声明</p>
+<p><code>package</code>声明不换行</p>
+</li>
+<li><p><code>import</code>声明</p>
+<ul>
+<li>除<code>import static</code>外，其他<code>import</code>声明不使用<code>*</code></li>
+<li><code>import</code>声明不换行</li>
+<li>所有<code>import static</code>声明位于第一个block，其他<code>import</code>声明位于第二个block，两个block间由一行空行分隔。每个block内的<code>import</code>声明按ascii顺序从上到下排列</li>
+<li>不使用<code>import static</code>来导入静态内部类，使用普通的<code>import</code>声明</li>
+</ul>
+</li>
+<li><p>唯一的顶层<code>class</code></p>
+<p>关于<code>class</code>内容的排布：</p>
+<p>决定成员排列先后顺序时应注意遵循某些<strong>逻辑结构</strong>。它们的排布位置对于类的易学性有着很大影响。</p>
+<p>举个反例：将所有新建的方法都被添加到类的最后就不是一个好习惯，因为其破坏了类的逻辑结构。</p>
+<p>另外，所有的<strong>重载</strong>都应处于相邻位置。</p>
+</li>
+</ol>
+<p>每一部分间由一行空行分隔</p>
+<h3 id="III-格式"><a href="#III-格式" class="headerlink" title="III. 格式"></a>III. 格式</h3><ol>
+<li><p>关于大括号</p>
+<ul>
+<li><code>if</code>, <code>else</code>, <code>do</code>, <code>while</code>, <code>for</code>后必须跟大括号，即使该block为空或只有一行</li>
+<li>左括号：前不换行，后换行。右括号：前换行，当结束<strong>方法体、构造方法或一个命名类</strong>后才换行（如<code>else</code>前的右括号就不换行）</li>
+<li>当block为空时，右括号可以不换行直接紧接左括号闭合。除非该block为一个多block声明（如<code>if else</code>）的一部分</li>
+</ul>
+</li>
+<li><p>关于缩进：<strong>每级block前+2空格</strong></p>
+</li>
+<li><p>每行一句statement</p>
+</li>
+<li><p>除特殊情况外，每行<strong>最多100个“字符”</strong>，超出部分需换行。一个“字符”等同于一个Unicode码位，意味着一个全角字符等同于两个“字符”</p>
+</li>
+<li><p>关于4中的换行</p>
+<ul>
+<li><p>换行位置的选择：尽量不要<strong>打破更高的句法层次</strong>。对于非赋值运算符，在运算符之前换行；对于赋值运算符（包括foreach中的<code>:</code>）、逗号<code>,</code>，在运算符之后换行。</p>
+</li>
+<li><p>换行后，<strong>次行缩进在前一行的基础上+4空格</strong></p>
+</li>
+<li><p>当有多个连续行时，当且仅当两行的行首元素在句法上平行时，不需要额外的缩进</p>
+</li>
+</ul>
+</li>
+<li><p>空行</p>
+<ul>
+<li><p>除其他提到的特殊情况外，单空行总是出现在类中连续的成员或初始化块间</p>
+</li>
+<li><p>两个连续的成员变量间不要求一定出现单空行，当需要创建更清晰的逻辑结构时可以添加</p>
+</li>
+<li><p>除以上规则外，在必要时，可以添加单空行提升代码可读性（如将代码分隔为多个逻辑块）</p>
+</li>
+</ul>
+</li>
+<li><p>空格</p>
+<ul>
+<li><p>对于<code>if</code>, <code>for</code>, <code>catch</code>, <code>else</code>等关键字，在它们和括号（包括圆括号和大括号）间添加一个空格</p>
+</li>
+<li><p>在所有左大括号<code>&#123;</code>前添加一个空格，赋值操作除外（如<code>String[][] x = &#123;&#123;"foo"&#125;&#125;;</code>）</p>
+</li>
+<li><p>所有二元/三元操作符的前后分别添加一个空格</p>
+</li>
+<li><p>类型转换括号<code>)</code>后添加一个空格</p>
+</li>
+<li><p>类型和变量声明间添加一个空格，如<code>List&lt;String&gt; list</code></p>
+</li>
+</ul>
+</li>
+<li><p>推荐在运算表达式中添加分组括号以更清晰地描述其含义。不要假定所有读代码的人都熟记运算符优先级表</p>
+</li>
+<li><p>特定结构</p>
+<ul>
+<li><p><strong>枚举类</strong><br>每个枚举常量的分隔<code>,</code>后的换行是可选的。当枚举中类中没有声明方法，且枚举常量不含Javadoc时，可以选择使用初始化数组的格式来初始化枚举类。</p>
+</li>
+<li><p><strong>变量声明</strong><br>每次变量声明只指定一个变量。避免类似 <code>int a, b;</code> 的声明方式（for循环内除外）<br>局部变量的声明<strong>应尽可能接近其初次使用位置</strong>，以最小化其作用域。避免在将所有局部变量全部声明在block的开头位置。<br>局部变量的声明往往同时伴随着初始化。如果是较为复杂的初始化，相关代码应紧邻声明位置。</p>
+</li>
+<li><p><strong>数组</strong><br>数组声明允许被编写成block式（即在第一个大括号后换行）。<br>不要使用C风格的数组声明。使用 <code>String[] args</code> 而不是 <code>String args[]</code></p>
+</li>
+<li><p><strong><code>swtich</code></strong></p>
+<p>switch group的起始关键字<code>case</code>, <code>default</code>前使用<strong>+2空格</strong>缩进</p>
+<p>每个switch group内部再<strong>+2空格</strong>缩进</p>
+<p>每个switch group要么立刻结束（使用<code>break</code>, <code>return</code>, 抛出异常等），要么添加注释说明需要执行下一个switch group。通常只要标注即足够。本条规则不适用于最后一个switch group</p>
+<p>每个switch block中必须包含一个 <code>default</code> switch group，即使它不包含任何代码。<br>（对于枚举类型的switch block，如果包含了覆盖到所有可能性的<code>case</code>，可以不添加<code>default</code> switch group）</p>
+</li>
+<li><p><strong>注解</strong></p>
+<p>应用于<strong>类</strong>、<strong>方法</strong>或<strong>构造器</strong>的注解紧邻文档block，且每个注解占据独立的一行。这一行不适用于上述的100字符换行规则</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getNameIfPresent</span><span class="params">()</span> </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>应用于<strong>成员变量</strong>的注解紧邻文档block，但多个注解可能被列于同一行，注解间由一个空格分隔</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Partial</span> <span class="meta">@Mock</span> DataLoader loader;</span><br></pre></td></tr></table></figure>
+<p>对于方法参数、局部变量、类型的注解编写没有特别要求</p>
+</li>
+<li><p><strong>注释</strong></p>
+<p>对于单行注释，<code>// ...</code> 和 <code>/* ... */</code> 均可</p>
+<p>对于多行注释 <code>/* ... */</code>，随后的每行都应以一个和上一行对齐的 <code>*</code> 开头</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * This is          // And so           /* Or you can</span></span><br><span class="line"><span class="comment"> * okay.            // is this.          * even do this. */</span></span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<p>不要将注释包含在用星号或其他字符绘制的框中</p>
+</li>
+<li><p><strong>类与成员的修饰关键字</strong></p>
+<p>如出现，按照Java语言规范建议的顺序显示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">protected</span> <span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">default</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> <span class="keyword">synchronized</span> <span class="keyword">native</span> <span class="keyword">strictfp</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>数字字面量</strong></p>
+<p>声明 <code>long</code> 字面量时，使用 <code>L</code> 后缀而不是 <code>l</code>，避免与 <code>1</code> 混淆</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="III-命名"><a href="#III-命名" class="headerlink" title="III. 命名"></a>III. 命名</h3><ol>
+<li><p>适用于所有标识符的通用规则</p>
+<p>标识符只能使用ascii字母，数字和下划线（在小部分情况下）。以便于每个有效的标识符名可以被正则表达式的一个<code>\w+</code>匹配。</p>
+<p>Google不使用特殊前缀、后缀。如 <code>name_</code>, <code>mName</code>, <code>s_name</code> 等不是Google Style</p>
+</li>
+<li><p>按标识符类型</p>
+<ul>
+<li><p><strong>包名</strong></p>
+<p>使用全小写字母，连续的单词直接相连。如使用 <code>com.example.deepspace</code> 而不是 <code>com.example.deepSpace</code> 和 <code>com.example.deep_space</code></p>
+</li>
+<li><p><strong>类名</strong></p>
+<p>使用大写开头的驼峰（<code>UpperCamelCase</code>）</p>
+<p>类名通常为名词或名词词组，如 <code>Character</code> 和 <code>ImmutableList</code> </p>
+<p>接口名词性规则通常和类名一致，但也可以是形容词或形容词词组，如 <code>Readable</code></p>
+<p>测试类名通常以它们所测试的类名开头，以 <code>Test</code> 结束，如 <code>HashTest</code>, <code>HashIntegrationTest</code></p>
+<p>注解类型没有明确的命名规范</p>
+</li>
+<li><p><strong>方法名</strong></p>
+<p>使用小写开头的驼峰（<code>lowerCamelCase</code>）</p>
+<p>方法名通常为动词或动词词组，如 <code>sendMessage</code> 和 <code>stop</code></p>
+<p>下划线可以出现在JUnit的测试方法中，用于分隔方法名的逻辑部分，两部分分别使用驼峰。一种典型的模式是<code>&lt;methodUnderTest&gt;_&lt;state&gt;</code> ，例如 <code>pop_emptyStack</code></p>
+</li>
+<li><p><strong>常量名</strong></p>
+<p>使用下划线分隔的全大写（<code>CONSTANT_CASE</code>）</p>
+<p>常量名通常为名词或名词词组</p>
+<p>常量指那些被 <code>static final</code> 修饰，且<strong>内容完全不可变，自身方法不会改变自身状态</strong>的成员变量。包括所有的原始数据类型、<code>String</code>、不可变类型、以及不可变类型的不可变集合。</p>
+<p>如果某个实例的可观测状态可以改变，则其不是一个常量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Constants</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NUMBER = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> ImmutableList&lt;String&gt; NAMES = ImmutableList.of(<span class="string">&quot;Ed&quot;</span>, <span class="string">&quot;Ann&quot;</span>);</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> ImmutableMap&lt;String, Integer&gt; AGES = ImmutableMap.of(<span class="string">&quot;Ed&quot;</span>, <span class="number">35</span>, <span class="string">&quot;Ann&quot;</span>, <span class="number">32</span>);</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> Joiner COMMA_JOINER = Joiner.on(<span class="string">&#x27;,&#x27;</span>); <span class="comment">// because Joiner is immutable</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> SomeMutableType[] EMPTY_ARRAY = &#123;&#125;;</span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SomeEnum</span> </span>&#123; ENUM_CONSTANT &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Not constants</span></span><br><span class="line"><span class="keyword">static</span> String nonFinal = <span class="string">&quot;non-final&quot;</span>;</span><br><span class="line"><span class="keyword">final</span> String nonStatic = <span class="string">&quot;non-static&quot;</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> Set&lt;String&gt; mutableCollection = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> ImmutableSet&lt;SomeMutableType&gt; mutableElements = ImmutableSet.of(mutable);</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> ImmutableMap&lt;String, SomeMutableType&gt; mutableValues =</span><br><span class="line">    ImmutableMap.of(<span class="string">&quot;Ed&quot;</span>, mutableInstance, <span class="string">&quot;Ann&quot;</span>, mutableInstance2);</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> Logger logger = Logger.getLogger(MyClass.getName());</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> String[] nonEmptyArray = &#123;<span class="string">&quot;these&quot;</span>, <span class="string">&quot;can&quot;</span>, <span class="string">&quot;change&quot;</span>&#125;;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>非常量成员变量名</strong></p>
+<p>使用小写开头的驼峰（<code>lowerCamelCase</code>）</p>
+<p>它们的名字通常为名词或名词词组</p>
+</li>
+<li><p><strong>参数名</strong></p>
+<p>使用小写开头的驼峰（<code>lowerCamelCase</code>）</p>
+<p>避免在 <code>public</code> 修饰的方法中使用单字符的参数名</p>
+</li>
+<li><p><strong>局部变量名</strong></p>
+<p>使用小写开头的驼峰（<code>lowerCamelCase</code>）</p>
+<p>即使它们是 <code>final</code> 或不可变的，也不要将它们视作常量，或使用常量的命名风格</p>
+</li>
+<li><p><strong>类型变量名</strong></p>
+<p>可以使用下列两种风格之一</p>
+<ol>
+<li>一个唯一的大写字母，可后跟一个单一的数字，如 <code>T</code> , <code>E</code>, <code>T2</code></li>
+<li>类名风格后跟一个大写字母 <code>T</code>，如 <code>RequestT</code>, <code>FooBarT</code></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>驼峰标准</p>
+<p>使用下述步骤将一个英语词组转换为驼峰</p>
+<ol>
+<li>去除词组中的所有 <code>&#39;</code> 号，并将其全转换为ascii形式。如 <em>Müller’s algorithm</em> 应该被转换为 <em>Mullers algorithm</em></li>
+<li>将第一步的结果拆分成独立的多个单词。如果结果中已经有驼峰部分，推荐将其进一步拆分成单词。如 <em>AdWords</em> 可以被进一步拆分成 <em>ad words</em></li>
+<li>将所有字母变为小写（包括缩略词），并将每个单词（UpperCamelCase）或除首单词外的每个单词（lowerCamelCase）的第一个字母大写</li>
+<li>连接所有单词，形成最后的驼峰表示</li>
+</ol>
+<p>应用上述的规范化流程可以解决一些专有名词大写导致的不一致。</p>
+<p>如 <em>XML HTTP request</em> 最后应写成 <code>XmlHttpRequest</code> 而不是 <code>XMLHTTPRequest</code></p>
+</li>
+</ol>
+<h3 id="IV-编码实践"><a href="#IV-编码实践" class="headerlink" title="IV. 编码实践"></a>IV. 编码实践</h3><ol>
+<li><p>除重写 <code>@Deprecated</code> 方法外，总是为重写的方法添加 <code>@Override</code> 注解</p>
+</li>
+<li><p>除少数例外情况，对所有被 <code>catch</code> 的Exception都应做出相应响应（通常是记录一条log，或将其向外抛出）</p>
+<ul>
+<li><p>例外1：如确实存在某些不需要处理的情况，需要在 <code>catch</code> block 中添加一条解释性注释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">int</span> i = Integer.parseInt(response);</span><br><span class="line">  <span class="keyword">return</span> handleNumericResponse(i);</span><br><span class="line">&#125; <span class="keyword">catch</span> (NumberFormatException ok) &#123;</span><br><span class="line">  <span class="comment">// it&#x27;s not numeric; that&#x27;s fine, just continue</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> handleTextResponse(response);</span><br></pre></td></tr></table></figure></li>
+<li><p>例外2：在某些测试用例中，若 <code>catch</code> 到的Exception变量名以 <code>expected</code> 起始，则可以不添加注释</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  emptyStack.pop();</span><br><span class="line">  fail();</span><br><span class="line">&#125; <span class="keyword">catch</span> (NoSuchElementException expected) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>通过类而不是对象来使用静态成员</p>
+</li>
+<li><p>避免使用 Finalizer， 即避免重写 <code>Object.finalize</code> 方法</p>
+</li>
+</ol>
+<h3 id="V-Javadoc"><a href="#V-Javadoc" class="headerlink" title="V. Javadoc"></a>V. Javadoc</h3><ol>
+<li><p>格式</p>
+<p>基本格式如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Multiple lines of Javadoc text are written here,</span></span><br><span class="line"><span class="comment"> * wrapped normally...</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">method</span><span class="params">(String p1)</span> </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** An especially short bit of Javadoc. */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">anotherMethod</span><span class="params">(String p1)</span> </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>当存在空行时，下段段首包含一个 <code>&lt;p&gt;</code> ，后不接空格。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * First paragraph ...</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Second paragraph ...</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Third paragraph</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">method</span><span class="params">(String p1)</span> </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>所有的标准 <code>@</code> tag按 <code>@param</code>, <code>@return</code>, <code>@throws</code>, <code>@deprecated</code> 的顺序出现。同时，它们的描述不能为空。</p>
+<p>若某个tag的内容无法包含在一行内，下一行起始位置为本行 <code>@</code> 对齐位置+4空格</p>
+</li>
+<li><p>摘要段</p>
+<p>位于所有Javadoc的<strong>开始段</strong>，用于简要描述当前被注释内容的作用。</p>
+<p>通常为一个名词词组或动词词组，不是一个完整的句子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Correct</span></span><br><span class="line"><span class="comment">/** Returns the customer ID. */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Incorrect</span></span><br><span class="line"><span class="comment">/** This method returns ... */</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在何处使用Javadoc</p>
+<p>除一些例外情况，<strong>至少</strong>为类中的所有的 <code>public</code> 方法、所有 <code>protected</code> , <code>public</code> 成员添加Javadoc</p>
+<ul>
+<li><p>例外1：明显可自解释的方法可以不添加Javadoc，如Getter和Setter。</p>
+<blockquote>
+<p>并不是所有 Getter / Setter 都可以省略Javadoc。例如若某个Getter名为 <code>getCanonicalName</code> 。Javadoc不能仅为一句 <code>/** Returns the canonical name. */</code> ，更不要省略。因为读者可能无法理解 “Canonical Name” 的含义</p>
+</blockquote>
+</li>
+<li><p>例外2：重写的方法允许不添加Javadoc</p>
+</li>
+</ul>
+<p>对于其他不做强制要求的部分，可以不严格遵循上述 1. 中的Javadoc格式。</p>
+<p>另外，对于某些<strong>定义类或成员的总体目的或行为</strong>的实现注释，使用短Javadoc格式，即 <code>/**</code></p>
+</li>
+</ol>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://google.github.io/styleguide/javaguide.html">Google Java Style Guide</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.codinghorror.com/new-programming-jargon/">New Programming Jargon</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/17/How-to-be-a-good-engineer/" rel="prev" title="How to be a good engineer">
+      <i class="fa fa-chevron-left"></i> How to be a good engineer
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E6%B3%A8%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">术语注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-%E6%BA%90%E6%96%87%E4%BB%B6%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">I. 源文件基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#II-%E6%BA%90%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">II. 源文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">III. 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#III-%E5%91%BD%E5%90%8D"><span class="nav-number">5.</span> <span class="nav-text">III. 命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IV-%E7%BC%96%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">IV. 编码实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V-Javadoc"><span class="nav-number">7.</span> <span class="nav-text">V. Javadoc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiao"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Xiao</p>
+  <div class="site-description" itemprop="description">一个平平无奇的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunxia0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunxia0" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-code"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xiao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
