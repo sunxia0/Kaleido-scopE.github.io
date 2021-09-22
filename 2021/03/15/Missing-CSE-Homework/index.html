@@ -224,13 +224,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>6.3k</span>
+              <span>8.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -296,7 +296,7 @@
 <li>匹配 <code>1 file found?</code> / <code>2 files found?</code> / <code>24 files found?</code> 但不匹配 <code>No files found.</code><br><strong><code>\d+ files? found\?</code></strong></li>
 <li>匹配 <code>1.⊔⊔⊔abc</code> / <code>2.⊔(tab)abc</code> / <code>3.⊔⊔⊔⊔⊔⊔⊔⊔⊔⊔⊔abc</code> 但不匹配 <code>4.abc</code><br><strong><code>\d\.\s+abc</code></strong></li>
 <li>匹配 <code>Mission: successful</code> 但不匹配 <code>Last Mission: unsuccessful</code> / <code>Next Mission: successful upon capture of target</code><br><strong><code>^Mission: successful$</code></strong></li>
-<li>捕获 <code>file_record_transcript.pdf</code> / <code>file_07241999.pdf</code> 中的文件命，但不匹配 <code>testfile_fake.pdf.tmp</code><br><strong><code>^(file.+)\.pdf$</code></strong></li>
+<li>捕获 <code>file_record_transcript.pdf</code> / <code>file_07241999.pdf</code> 中的文件名，但不匹配 <code>testfile_fake.pdf.tmp</code><br><strong><code>^(file.+)\.pdf$</code></strong></li>
 <li>捕获 <code>Jan 1987</code> / <code>May 1969</code> / <code>Aug 2011</code> 中的整个日期和年份（两个捕获组）<br><strong><code>(\w+ (\d+))</code></strong></li>
 <li>捕获 <code>1280x720</code> / <code>1920x1600</code> / <code>1024x768</code> 等分辨率中的宽和高<br><strong><code>(\d+)x(\d+)</code></strong></li>
 <li>匹配 <code>I love cats</code> / <code>I love dogs</code> 但不匹配 <code>I love logs</code> / <code>I love cogs</code><br><strong><code>I love (cat|dog)s</code></strong></li>
@@ -326,7 +326,33 @@
 <p><code>sed</code> 的 <code>-i</code> 选项提供了原地替换，上面的语句应写为：<br><code>sed -i &#39;.tmp&#39; s/REGEX/SUBSTITUTION/ input.txt</code><br>这一语句在执行原地替换前会先生成一个后缀为 <code>.tmp</code> 的备份文件。如果使用 <code>-i &#39;&#39;</code> ，则不会生成任何中间文件。</p>
 </li>
 </ul>
-<h2 id="Command-line-Environment"><a href="#Command-line-Environment" class="headerlink" title="Command-line Environment"></a>Command-line Environment</h2>
+<h2 id="Command-line-Environment"><a href="#Command-line-Environment" class="headerlink" title="Command-line Environment"></a>Command-line Environment</h2><h3 id="Job-Control"><a href="#Job-Control" class="headerlink" title="Job Control"></a>Job Control</h3><ol>
+<li>我们可以通过 <code>ps aux | grep</code> 来获得我们启动的job的pid，并kill它们。事实上还有更方便<br>的做法。后台启动一个 <code>sleep 10000</code> 的job：使用 <code>pgrep</code> 查找pid。使用 <code>pkill</code> 来结束进程，从而使得无需自行填入pid。（提示：使用 <code>-af</code>）<br><strong>A：</strong><br>查找pid：<code>pgrep -af &#39;sleep 10000&#39;</code><br>kill进程：<code>pkill -af &#39;sleep 10000&#39;</code></li>
+<li>写一个 <code>pidwait</code> 函数，接收一个pid，并等到该进程结束，并执行 <code>ls</code> （提示：<code>kill -0</code> 不会向指定进程发送信号，但会根据进程是否存在返回成功（0）或失败（非0））<br><strong>A：</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/zsh</span></span><br><span class="line"><span class="function"><span class="title">pidwait</span></span> () &#123;</span><br><span class="line">  <span class="keyword">while</span> <span class="built_in">kill</span> -0 <span class="variable">$1</span> 2&gt;/dev/null</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    sleep 1</span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;process <span class="variable">$1</span> has finished.&quot;</span></span><br><span class="line">  ls</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Terminal-Multiplexer"><a href="#Terminal-Multiplexer" class="headerlink" title="Terminal Multiplexer"></a>Terminal Multiplexer</h3><p><a target="_blank" rel="noopener" href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/"><code>tmux</code> tutorial</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/">自定义 <code>tmux</code></a> ：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~/.tmux.conf</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#remap prefix from &#x27;C-b&#x27; to &#x27;C-a&#x27;</span></span><br><span class="line">unbind C-b</span><br><span class="line">set-option -g prefix C-a</span><br><span class="line">bind-key C-a send-prefix</span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable mouse control (clickable windows, panes, resizable panes)</span></span><br><span class="line"><span class="comment"># set -g mouse-select-window on</span></span><br><span class="line"><span class="comment"># set -g mouse-select-pane on</span></span><br><span class="line"><span class="comment"># set -g mouse-resize-pane on</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable mouse mode (tmux 2.1 and above)</span></span><br><span class="line"><span class="built_in">set</span> -g mouse on</span><br></pre></td></tr></table></figure></p>
+<h3 id="Aliases"><a href="#Aliases" class="headerlink" title="Aliases"></a>Aliases</h3><p>使用 <code>history | awk &#39;&#123;$1=&quot;&quot;;print substr($0,2)&#125;&#39; | sort | uniq -c | sort -n | tail -n 10</code> 可以从history中读取最常使用的10条命令，为它们设置别名</p>
+<p><strong>A：</strong></p>
+<p>我的Top 10 cmd list如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> 30 l</span><br><span class="line"> 35 ssh cbs@192.168.1.149</span><br><span class="line"> 39 git pull</span><br><span class="line"> 44 hexo g -d</span><br><span class="line"> 59 npm start</span><br><span class="line"> 71 <span class="built_in">cd</span> ~</span><br><span class="line"> 75 hexo s</span><br><span class="line"> 82 ls -a</span><br><span class="line">170 <span class="built_in">cd</span> ..</span><br><span class="line">849 ls</span><br></pre></td></tr></table></figure>
+<p>没想到 hexo 的使用频率还挺高，于是做了以下别名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~/.zprofile</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># setting hexo aliases</span></span><br><span class="line"><span class="built_in">alias</span> hs=<span class="string">&quot;hexo s&quot;</span></span><br><span class="line"><span class="built_in">alias</span> hgd=<span class="string">&quot;hexo g -d&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<h3 id="Remote-Machines"><a href="#Remote-Machines" class="headerlink" title="Remote Machines"></a>Remote Machines</h3><p>查询 <code>ssh</code> 的 <code>-N</code> 和 <code>-f</code> 标志，实现后台端口转发：</p>
+<p><strong>A：</strong></p>
+<p>首先在VM上启动一个HTTP服务，监听8090端口，利用 <code>-L</code> 进行端口转发，可以写出命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -L 8090:localhost:8090 VM</span><br></pre></td></tr></table></figure>
+<p>该命令监听本地的8090端口，并将其转发到VM的8090端口。然而该命令的问题在于，在实现端口转发的同时还登录了VM。如果我们不需要登录，就可以使用 <code>-N</code> ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ssh manpage</span><br><span class="line"></span><br><span class="line">-N      Do not execute a remote command.  This is useful for just forwarding ports.</span><br></pre></td></tr></table></figure>
+<p>加上 <code>-N</code> 后，端口转发命令变成了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -L 8090:localhost:8090 VM</span><br></pre></td></tr></table></figure>
+<p>我们不会再登入VM了，然而，这条命令仍然存在阻塞问题。阻塞的命令导致我们无法在当前终端中继续其他工作。为了让其在后台工作，我们可以引入 <code>-f</code> ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># ssh manpage</span><br><span class="line"></span><br><span class="line">-f      Requests ssh to go to background just before command execution.  </span><br><span class="line">This is useful if ssh is going to ask for passwords or passphrases, but the</span><br><span class="line">user wants it in the background.  This implies -n.  The recommended way to </span><br><span class="line">start X11 programs at a remote site is with something like ssh -f host xterm.</span><br></pre></td></tr></table></figure>
+<p>最终，命令变成了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -fN -L 8090:localhost:8090 VM</span><br></pre></td></tr></table></figure>
+<p>实现了不登入VM，运行在后台的端口转发</p>
+
     </div>
 
     
@@ -406,7 +432,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Course-overview-the-shell"><span class="nav-number">1.</span> <span class="nav-text">Course overview + the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Tools-and-Scripting"><span class="nav-number">2.</span> <span class="nav-text">Shell Tools and Scripting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Editors-Vim"><span class="nav-number">3.</span> <span class="nav-text">Editors (Vim)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Wrangling"><span class="nav-number">4.</span> <span class="nav-text">Data Wrangling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-line-Environment"><span class="nav-number">5.</span> <span class="nav-text">Command-line Environment</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Course-overview-the-shell"><span class="nav-number">1.</span> <span class="nav-text">Course overview + the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Tools-and-Scripting"><span class="nav-number">2.</span> <span class="nav-text">Shell Tools and Scripting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Editors-Vim"><span class="nav-number">3.</span> <span class="nav-text">Editors (Vim)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Wrangling"><span class="nav-number">4.</span> <span class="nav-text">Data Wrangling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-line-Environment"><span class="nav-number">5.</span> <span class="nav-text">Command-line Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Job-Control"><span class="nav-number">5.1.</span> <span class="nav-text">Job Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Terminal-Multiplexer"><span class="nav-number">5.2.</span> <span class="nav-text">Terminal Multiplexer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aliases"><span class="nav-number">5.3.</span> <span class="nav-text">Aliases</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remote-Machines"><span class="nav-number">5.4.</span> <span class="nav-text">Remote Machines</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
