@@ -279,9 +279,9 @@
 <p>该应用为路径 <code>/hello</code> 分别设置一条before filter，一条route，一条after filter。此外，在测试目录下还建立了一个静态资源文件夹，包含一个内容如下的 <code>index.html</code></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Sample File<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 <li><p>测试环境</p>
-<p>CPU: Intel Xeon Silver 4214 @ 2.20GHz, 36 cores</p>
-<p>Memory: 128G</p>
-<p>Disk: 5.0T</p>
+<p><strong>CPU</strong>: Intel Xeon Silver 4214 @ 2.20GHz, 36 cores</p>
+<p><strong>Memory</strong>: 128G</p>
+<p><strong>Disk</strong>: 5.0T</p>
 </li>
 <li><p>测试方法</p>
 <p>使用<a target="_blank" rel="noopener" href="http://httpd.apache.org/docs/2.0/programs/ab.html">Apache Bench</a>，分别对调用route的路径 <code>/hello</code> 和获取 <code>index.html</code> 的路径 <code>/</code> 进行测试十、百、千级并发测试。为控制变量，每次测试重启测试环境。</p>
