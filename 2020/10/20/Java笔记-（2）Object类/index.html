@@ -250,7 +250,7 @@
 <ol>
 <li>Java应用程序执行期间多次对同一个对象调用 <code>hashCode</code> 方法时，只要没有修改在对象 <code>equals</code> 方法比较中使用的信息，该方法就必须一致地返回相同的整数。但不要求同一应用程序在不同的执行中返回相同的值。</li>
 <li>若根据 <code>equals(Object)</code> 方法得到两个对象相等，则两个对象的 <code>hashCode</code> 需要返回相同的值。</li>
-<li>若根据 <code>equals(Object)</code> 方法得到两个对象相等，并不要求两个对象的 <code>hashCode</code> 一定要返回不同的值。但设计时最好降低二者 <code>hashCode</code> 返回相同值的概率，这样可以提高哈希表的性能。</li>
+<li>若根据 <code>equals(Object)</code> 方法得到两个对象不相等，并不要求两个对象的 <code>hashCode</code> 一定要返回不同的值。但设计时最好降低二者 <code>hashCode</code> 返回相同值的概率，这样可以提高哈希表的性能。</li>
 </ol>
 <h3 id="3-equals"><a href="#3-equals" class="headerlink" title="3. equals"></a>3. equals</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>返回某个对象是否和当前对象“相等”。该方法实现了一个非空对象引用的等级关系。即</p>
