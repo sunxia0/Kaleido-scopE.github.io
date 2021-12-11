@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sunxia0.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="体验了一下字节的后端训练营，和小伙伴一起实现了一个红包雨系统的核心接口。这里记录一下我负责的红包分配方案设计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红包雨-红包分配方案设计">
+<meta property="og:url" content="https://sunxia0.github.io/2021/12/11/%E7%BA%A2%E5%8C%85%E9%9B%A8-%E7%BA%A2%E5%8C%85%E5%88%86%E9%85%8D%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">
+<meta property="og:site_name" content="Fantasy">
+<meta property="og:description" content="体验了一下字节的后端训练营，和小伙伴一起实现了一个红包雨系统的核心接口。这里记录一下我负责的红包分配方案设计。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-11T11:58:47.000Z">
+<meta property="article:modified_time" content="2021-12-11T11:58:47.000Z">
+<meta property="article:author" content="phantasia">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://sunxia0.github.io/2021/12/11/%E7%BA%A2%E5%8C%85%E9%9B%A8-%E7%BA%A2%E5%8C%85%E5%88%86%E9%85%8D%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>红包雨-红包分配方案设计 | Fantasy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Fantasy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sunxia0.github.io/2021/12/11/%E7%BA%A2%E5%8C%85%E9%9B%A8-%E7%BA%A2%E5%8C%85%E5%88%86%E9%85%8D%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="phantasia">
+      <meta itemprop="description" content="随缘更新的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Fantasy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          红包雨-红包分配方案设计
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-11 19:58:47" itemprop="dateCreated datePublished" datetime="2021-12-11T19:58:47+08:00">2021-12-11</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>600</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>体验了一下字节的后端训练营，和小伙伴一起实现了一个红包雨系统的核心接口。这里记录一下我负责的红包分配方案设计。</p>
+<a id="more"></a>
+<h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>春节红包雨是每年字节跳动最具挑战性的活动项目之一（除夕集中时间海量用户的参与）</p>
+<h3 id="需求说明"><a href="#需求说明" class="headerlink" title="需求说明"></a>需求说明</h3><p>语言不限，实现 3 个接口：<strong>抢红包接口</strong>、<strong>拆红包接口</strong>、<strong>钱包列表接口</strong></p>
+<ol>
+<li><p>抢红包接口</p>
+<ul>
+<li><p>每个用户最多只能抢到 N 次，次数可配</p>
+</li>
+<li><p>一定概率能抢到，概率可配置</p>
+</li>
+</ul>
+</li>
+<li>拆红包接口<ul>
+<li>把红包拆开入账到钱包</li>
+</ul>
+</li>
+<li><p>钱包列表接口</p>
+<ul>
+<li><p>显示总余额</p>
+</li>
+<li><p>显示抢到的红包，有已拆红包和未拆红包</p>
+</li>
+<li><p>按红包获取时间排序</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>红包雨的总金额、总个数、每个红包的金额范围可配置(配置文件)</p>
+<h2 id="红包分配方案"><a href="#红包分配方案" class="headerlink" title="红包分配方案"></a>红包分配方案</h2><p>红包的生成与分配是项目中非常重要的一环。一个好的方案应该能满足以下需求：</p>
+<ol>
+<li>尽可能把预算花完</li>
+<li>保证不超过预算</li>
+<li>当配置项临时变更时，仍应满足前三点需求</li>
+</ol>
+<p>我们精心设计了一套红包生成与分配的方案，若流量充足，可以使得配置的红包数分发完毕时，我们的方案可以使得配置的总金额<strong>正好消耗完毕</strong>。同时，我们还设计了“锦鲤”机制，可以让部分用户抽到大额的锦鲤红包，增加活动的趣味性。</p>
+<h3 id="可配置项"><a href="#可配置项" class="headerlink" title="可配置项"></a>可配置项</h3><ul>
+<li>普通红包总金额 <script type="math/tex">M</script>（保存为分）</li>
+<li>普通红包个数 <script type="math/tex">N</script></li>
+<li>金额范围 <script type="math/tex">[min, max]</script></li>
+<li>用户最多可抢次数 <script type="math/tex">k</script></li>
+<li>抢到概率 <script type="math/tex">p</script></li>
+<li>锦鲤红包个数 <script type="math/tex">F</script></li>
+<li>锦鲤红包金额 <script type="math/tex">m_F</script></li>
+</ul>
+<p>由于引入了锦鲤红包，因此在我们的配置中需要对原始配置进行转换。设原始配置的红包总金额为<script type="math/tex">M_0</script>，红包总个数为<script type="math/tex">N_0</script>则转换公式为：</p>
+<script type="math/tex; mode=display">
+M_0=M+F*m_F</script><script type="math/tex; mode=display">
+N_0=N+F</script><p>我们为配置内容引入了合理的约束：</p>
+<script type="math/tex; mode=display">
+min <= M / (N-F) <= max</script><p>该约束非常好理解，假定普通红包均值小于设定的最小值，或大于设定的最大值，说明此时的配置并不合理。在红包金额限定在<script type="math/tex">[min,max]</script>时，前者无法保证配置的总红包数消耗完，后者无法保证配置的总金额消耗完。</p>
+<h3 id="方案实现"><a href="#方案实现" class="headerlink" title="方案实现"></a>方案实现</h3><p>对于一次 <strong>抢红包接口（/snatch）</strong> 调用，我们将其分为三个阶段完成。第一个阶段检查用户当前抢的次数，第二个阶段以配置的概率为依据判断是否抢到，第三个阶段为判定抢红包成功的请求分配红包实例，包括红包id（<code>eid</code>）和红包金额</p>
+<h4 id="阶段一：抢红包次数检查"><a href="#阶段一：抢红包次数检查" class="headerlink" title="阶段一：抢红包次数检查"></a>阶段一：抢红包次数检查</h4><p>该阶段通过检查用户抢的次数，可以让一批无效的请求不进入后续的计算环节，减轻服务压力的同时还可以提高响应速度。</p>
+<p><strong>流程：</strong></p>
+<p>用<script type="math/tex">S_{count}</script>表示调用用户当前抢的次数（用户第一次调用 <strong>/snatch</strong> 时设置为1）</p>
+<p>检查<script type="math/tex">S_{count} \le k</script>是否满足：</p>
+<ul>
+<li>若满足，令 <script type="math/tex">S_{count} = S_{count} + 1</script>，进入第二阶段</li>
+<li>若不满足，直接返回抢红包失败</li>
+</ul>
+<h4 id="阶段二：判断是否抢到"><a href="#阶段二：判断是否抢到" class="headerlink" title="阶段二：判断是否抢到"></a>阶段二：判断是否抢到</h4><p>该阶段通过对<script type="math/tex">p</script>做预处理，判定某一次成功的调用（即通过阶段一）是否抢到红包。</p>
+<p><strong>流程：</strong></p>
+<p>令<script type="math/tex">a / b = p / 1</script>，其中<script type="math/tex">a，b</script>均为整数，且<script type="math/tex">a / b</script>不可再约分</p>
+<p>维护一个全局的请求计数器<script type="math/tex">C</script>，计算<script type="math/tex">C\ mod\ b</script>:</p>
+<ul>
+<li>若<script type="math/tex">C\ mod\ b < a</script>，判定本次抢红包成功，进入阶段三</li>
+<li>若<script type="math/tex">C\ mod\ b \ge a</script>，判定本次抢红包失败</li>
+</ul>
+<p>计算完成后，令<script type="math/tex">C=C+1</script></p>
+<p>我们的方案规避了随机数库的不可控性，当流量足够大时，可以严格保证每次成功的调用抢到红包的概率是<script type="math/tex">p</script>，同时实现也相对简单。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">gcd</span><span class="params">(x, y <span class="keyword">int64</span>)</span> <span class="title">int64</span></span> &#123;</span><br><span class="line">   <span class="keyword">if</span> x%y == <span class="number">0</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> y</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> gcd(y, x%y)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadStrategy</span><span class="params">(p <span class="keyword">float64</span>)</span> <span class="params">(<span class="keyword">int64</span>, <span class="keyword">int64</span>)</span></span> &#123;</span><br><span class="line">   <span class="keyword">var</span> b <span class="keyword">int64</span> = <span class="number">1</span></span><br><span class="line">   <span class="keyword">for</span> p != <span class="keyword">float64</span>(<span class="keyword">int64</span>(p)) &#123;</span><br><span class="line">      b *= <span class="number">10</span></span><br><span class="line">      p *= <span class="number">10</span></span><br><span class="line">   &#125;</span><br><span class="line">   a := <span class="keyword">int64</span>(p)</span><br><span class="line">   d := gcd(b, a)</span><br><span class="line">   <span class="keyword">return</span> a / d, b / d</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">testSnatching</span><span class="params">()</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">   next := atomic.AddInt64(&amp;C, <span class="number">1</span>)</span><br><span class="line">   cur := next - <span class="number">1</span></span><br><span class="line">   <span class="keyword">return</span> cur%a &lt; b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在实际的编码中，我们采用原子操作来进行请求计数器<script type="math/tex">C</script>的自增，无需加锁的开销。</p>
+<h4 id="阶段三：红包金额分配"><a href="#阶段三：红包金额分配" class="headerlink" title="阶段三：红包金额分配"></a>阶段三：红包金额分配</h4><p>该阶段为成功抢到的红包分配红包id（表示为 <code>eid</code> ）和红包金额。</p>
+<h5 id="红包id生成"><a href="#红包id生成" class="headerlink" title="红包id生成"></a>红包id生成</h5><p>由于我们的应用最终要进行多实例部署，如何在分布式环境中保证 <code>eid</code> 的全局唯一性就成了这一阶段的重点。最终，我们的实现方案是 <strong>Redis分布式锁 + 分段申请</strong>，最终生成的 <code>eid</code> 范围为<script type="math/tex">[1,N+F]</script></p>
+<p>Redis中会维护一条<strong>剩余红包数</strong>的记录，在应用启动时，Redis会从配置文件中读取总红包个数<script type="math/tex">N+F</script>，并将其设置到<strong>剩余红包数</strong>的记录中。</p>
+<p>每个实例启动后调用<strong>eid申请函数</strong>，其首先会获取一个由Redis实现的分布式锁，之后读取Redis中的剩余红包数<script type="math/tex">R</script>，则可以根据总红包数计算已分配的红包数<script type="math/tex">A=N-R</script>，此时下一个可用的 <code>eid</code> 即为<script type="math/tex">A+1</script>。之后，申请函数会尝试申请一段长度为<script type="math/tex">CacheCapacitiy</script>的 <code>eid</code> ，并设置<script type="math/tex">R=R-CacheCapacity</script>，最终本次申请到的 <code>eid</code> 范围为<script type="math/tex">[A+1,A+CacheCapacity]</script>，两个边界将被设置到实例本地。若剩余红包数<script type="math/tex">R<CacheCapacitiy</script>，则直接申请到边界，即最终申请到的 <code>eid</code> 范围为<script type="math/tex">[A+1,R]</script>，并设置<script type="math/tex">R=0</script>。后续的实例再进行申请时发现已没有剩余红包，则会设置本地的<strong>已发完</strong>标记，后续的 <strong>/snatch</strong> 调用都不再成功。</p>
+<p>分段申请的设计可以减少分布式锁的加锁次数，提高系统性能。</p>
+<p>每个实例还会在本地维护一个<script type="math/tex">offset</script>变量，用于标记下一个使用的 <code>eid</code> 相较于起始 <code>eid</code> 的偏移量。当请求达到时，每个实例会更新<script type="math/tex">offset</script>，并利用其分配 <code>eid</code>。</p>
+<h5 id="锦鲤红包的判定"><a href="#锦鲤红包的判定" class="headerlink" title="锦鲤红包的判定"></a>锦鲤红包的判定</h5><p>在我们的方案中，锦鲤红包的个数和金额都是固定的，且锦鲤红包个数只占所有红包中很小一部分，因此我们的方案是在<script type="math/tex">[1,N]</script>中设置<script type="math/tex">F</script>个等分点，等分点对应的 <code>eid</code> 则判定为锦鲤红包。由于最终的请求流量是随机的，因此抢到锦鲤红包的用户也是随机的。</p>
+<h5 id="红包金额生成"><a href="#红包金额生成" class="headerlink" title="红包金额生成"></a>红包金额生成</h5><p>在完成 <code>eid</code> 申请后，金额生成算法会为所有 <code>eid</code> 生成一个满足配置的金额。金额要么落在<script type="math/tex">[min,max]</script>中，要么为<script type="math/tex">m_F</script>。</p>
+<p>Redis中会维护一条<strong>普通红包金额均值</strong>的记录，与剩余红包数类似，同样在应用启动时写入。</p>
+<p>每次 <code>eid</code> 申请完成后，按如下流程为每个 <code>eid</code> 分配红包金额：</p>
+<ol>
+<li><p>读取Redis中的<strong>普通红包金额均值</strong><script type="math/tex">Avg</script></p>
+</li>
+<li><p>每次生成一对红包，金额分别为<script type="math/tex">Avg-i, Avg+i</script>，其中<script type="math/tex">i \in N</script>且<script type="math/tex">Avg-i \ge min, Avg+i \le max</script></p>
+<p>如果 <code>eid</code> 对应的是普通红包，则按以上规则生成；如果一对红包中有一个 <code>eid</code> 命中了锦鲤红包的 <code>eid</code>，则为其分配金额 <script type="math/tex">m_F</script>，同时为另一个红包分配金额<script type="math/tex">Avg</script></p>
+</li>
+<li><p>循环多次，直到最终为所有申请到的 <code>eid</code> 分配好金额。如果最后剩下一个红包，则根据其是否为锦鲤红包 <code>eid</code> 为其分配金额<script type="math/tex">m_F</script>或<script type="math/tex">Avg</script></p>
+</li>
+</ol>
+<p>除锦鲤红包外，该方案可以保证每一次的<strong>原子生成</strong>（即生成一对或一个）都不会让剩余普通红包的均值发生变化，因此可以保证当红包数消耗完时，红包总金额也正好消耗完。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> FunctionConfiguration <span class="keyword">struct</span> &#123;</span><br><span class="line">   Times       <span class="keyword">int32</span></span><br><span class="line">   Probability <span class="keyword">float64</span></span><br><span class="line">   Amount      <span class="keyword">int32</span></span><br><span class="line">   Envelope    <span class="keyword">int32</span></span><br><span class="line">   Min         <span class="keyword">int32</span></span><br><span class="line">   Max         <span class="keyword">int32</span></span><br><span class="line">   LuckyCount  <span class="keyword">int32</span></span><br><span class="line">   LuckyMoney  <span class="keyword">int32</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> SnatchService <span class="keyword">struct</span> &#123;</span><br><span class="line">   cfg                         FunctionConfiguration</span><br><span class="line">   runOut                      <span class="keyword">bool</span></span><br><span class="line">   eidStart, eidEnd, eidOffset <span class="keyword">int32</span></span><br><span class="line">   valueCache                  []<span class="keyword">int32</span></span><br><span class="line">   valueLock                   sync.Mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 缓存创建</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *SnatchService)</span> <span class="title">createValueCache</span><span class="params">()</span></span> &#123;</span><br><span class="line">   identifier, _ := redisService.DLock(dLockKey)</span><br><span class="line">   remaining, _ := redisService.GetRemainEnvelopeAmount()</span><br><span class="line"></span><br><span class="line">   <span class="comment">// eid starts from 1</span></span><br><span class="line">   s.eidStart = s.cfg.Envelope - remaining + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// No available eid</span></span><br><span class="line">   <span class="keyword">if</span> s.eidStart &gt; s.cfg.Envelope &#123;</span><br><span class="line">      log.Info(<span class="string">&quot;Run out of envelopes.&quot;</span>)</span><br><span class="line">      s.runOut = <span class="literal">true</span></span><br><span class="line">      _, _ = redisService.DUnlock(identifier, dLockKey)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Calculate eid end of this allocation</span></span><br><span class="line">   s.eidEnd = s.eidStart + cacheCapacity - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// Not enough eid</span></span><br><span class="line">   <span class="keyword">if</span> s.eidEnd &gt; s.cfg.Envelope &#123;</span><br><span class="line">      s.eidEnd = s.cfg.Envelope</span><br><span class="line">   &#125;</span><br><span class="line">   N := s.eidEnd - s.eidStart + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// Update remaining</span></span><br><span class="line">   _ = redisService.SetRemainEnvelopeAmount(remaining - N)</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Read current average value</span></span><br><span class="line">   avg, _ := redisService.GetAvgValue()</span><br><span class="line">   _, _ = redisService.DUnlock(identifier, dLockKey)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> N &gt; <span class="number">0</span> &#123;</span><br><span class="line">      log.Info(fmt.Sprintf(<span class="string">&quot;Get eid range [%v, %v]\n&quot;</span>, s.eidStart, s.eidEnd))</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   s.eidOffset = <span class="number">0</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">// Generate value of envelopes</span></span><br><span class="line">   <span class="keyword">for</span> idx := <span class="keyword">int32</span>(<span class="number">0</span>); idx &lt; N; &#123;</span><br><span class="line">      <span class="keyword">for</span> i := <span class="keyword">int32</span>(<span class="number">0</span>); idx &lt; N &amp;&amp; avg-i &gt;= s.cfg.Min &amp;&amp; avg+i &lt;= s.cfg.Max; i++ &#123;</span><br><span class="line">         <span class="keyword">if</span> idx+<span class="number">1</span> &lt; N &#123;</span><br><span class="line">            <span class="comment">// Eid &lt;- [1, Amount], Mod &lt;- [0, Amount)</span></span><br><span class="line">            <span class="keyword">if</span> (s.eidStart+idx<span class="number">-1</span>)%s.luckyRound != <span class="number">0</span> &amp;&amp; (s.eidStart+idx)%s.luckyRound != <span class="number">0</span> || s.eidStart+idx<span class="number">-1</span> == <span class="number">0</span> &#123;</span><br><span class="line">               s.valueCache[idx] = avg - i</span><br><span class="line">               s.valueCache[idx+<span class="number">1</span>] = avg + i</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="comment">// If lucky eid is met, two red envelopes with value luckyValue and avgValue will be created</span></span><br><span class="line">               <span class="keyword">var</span> lucky, another <span class="keyword">int32</span></span><br><span class="line">               <span class="keyword">if</span> (s.eidStart+idx)%s.luckyRound == <span class="number">0</span> &#123;</span><br><span class="line">                  lucky = idx</span><br><span class="line">                  another = idx + <span class="number">1</span></span><br><span class="line">               &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                  lucky = idx + <span class="number">1</span></span><br><span class="line">                  another = idx</span><br><span class="line">               &#125;</span><br><span class="line">               s.valueCache[lucky] = s.cfg.LuckyMoney</span><br><span class="line">               s.valueCache[another] = avg</span><br><span class="line">            &#125;</span><br><span class="line">            idx += <span class="number">2</span></span><br><span class="line">         &#125; <span class="keyword">else</span> <span class="keyword">if</span> idx &lt; N &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.eidStart+idx)%s.luckyRound != <span class="number">0</span> &#123;</span><br><span class="line">               s.valueCache[idx] = avg</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               s.valueCache[idx] = s.cfg.LuckyMoney</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获得下一个红包的eid和金额</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *SnatchService)</span> <span class="title">nextRedEnvelope</span><span class="params">()</span> <span class="params">(<span class="keyword">int32</span>, <span class="keyword">int32</span>)</span></span> &#123;</span><br><span class="line">   s.valueLock.Lock()</span><br><span class="line">   <span class="keyword">defer</span> s.valueLock.Unlock()</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> s.eidOffset &gt; s.eidEnd-s.eidStart &#123;</span><br><span class="line">      s.createValueCache()</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> s.runOut &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">-1</span>, <span class="number">-1</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   eid, value := s.eidStart+s.eidOffset, s.valueCache[s.eidOffset]</span><br><span class="line">   s.eidOffset++</span><br><span class="line">   <span class="keyword">return</span> eid, value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="应对配置更新"><a href="#应对配置更新" class="headerlink" title="应对配置更新"></a>应对配置更新</h3><p>配置更新时需要完成两件事：一是更新Redis中的共享变量（剩余红包数、普通红包均值），二是更新各个实例的本地变量。</p>
+<h4 id="Redis更新"><a href="#Redis更新" class="headerlink" title="Redis更新"></a>Redis更新</h4><p>在多实例环境下，Redis更新的难点在于需要实现一种“仅写一次”的机制，即仅由一个实例完成写，但所有实例都需要读。</p>
+<p>我们通过一种基于版本的方式来实现这一机制。我们引入了 <code>Version</code> 字段，用于描述配置的版本。每次更新时填入的版本号自增。<code>Version</code> 字段同时存在于Redis和配置文件中。和剩余红包数等共享变量类似，<code>Version</code> 会在应用初始化时从配置文件读入到Redis中。</p>
+<p>每次触发配置更新的回调时，所有实例首先读取Redis中的 <code>Version</code> 字段，比较其和新配置文件中 <code>Version</code> 字段的大小。若前者等于后者，说明Redis中的配置已经被修改，当前实例无需再次写入。若前者小于后者，说明此时Redis中的配置尚未被修改，当前实例将尝试获取分布式锁。实例获取到锁后，将再一次对二者进行比较（双检锁），若仍满足前者小于后者，将执行写Redis操作。写完毕后，更新Redis中的 <code>Version</code> 字段，并释放分布式锁。</p>
+<p>写Redis实质就是依据新配置更新共享变量<strong>剩余红包数</strong><script type="math/tex">R</script>和<strong>普通红包均值</strong><script type="math/tex">Avg</script>。由于更新Redis的实例此时持有老版本配置，因此可以依据普通红包总数<script type="math/tex">N</script>计算出已发放的普通红包数<script type="math/tex">S</script>。由于我们的方案保证了金额分配中<script type="math/tex">Avg</script>的值不变，因此使用<script type="math/tex">Avg*S</script>就可以计算出已发普通红包的金额。此时，无论是已发放的红包数还是已发放的金额，都有可能大于等于新配置中的对应量。若检查到这种情况，说明此时在新配置下已经超发，Redis中的<script type="math/tex">R</script>和<script type="math/tex">Avg</script>都将被设为0。若二者都小于新配置，通过减去已发放的，我们可以计算出新的<script type="math/tex">R</script>和<script type="math/tex">Avg</script>，并将二者更新到Redis中。我们还对新配置增加了约束检查。当新的<script type="math/tex">Avg</script>小于新的<script type="math/tex">min</script>时，我们将设置<script type="math/tex">Avg=min</script>，即始终以<script type="math/tex">min</script>的面额发放红包，直到把预算消耗完（此时配置的红包数有剩余）。当新的<script type="math/tex">Avg</script>大于<script type="math/tex">max</script>时，我们将设置<script type="math/tex">Avg=max</script>，即始终以<script type="math/tex">max</script>的面额发放红包，直到把配置的红包数消耗完（此时预算有剩余）。</p>
+<h4 id="本地变量更新"><a href="#本地变量更新" class="headerlink" title="本地变量更新"></a>本地变量更新</h4><p>每个实例在完成上一步后，需要依据新的配置对本地变量进行更新。这一步相对简单，只需读取Redis中的剩余红包数，检查新配置是否超发（为0），若超发，设置<strong>已发完</strong>标记，之后的发红包请求将直接失败。若未超发，将新配置中的变量覆盖本地变量即可。</p>
+<p>由于Local Cache的存在，配置更新并不会立刻生效。当实例把消耗完Local Cache，就会按照新的配置进行红包申请了。</p>
+<p><strong>核心代码：</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">s := <span class="built_in">new</span>(SnatchService)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">callback</span><span class="params">(cfg config.Configuration)</span></span> &#123;</span><br><span class="line">   log.Info(<span class="string">&quot;Reloading function configuration...&quot;</span>)</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Keep this order of acquiring lock to avoid deadlock</span></span><br><span class="line">   <span class="comment">// valueLock -&gt; DLock</span></span><br><span class="line">   s.valueLock.Lock()</span><br><span class="line">   <span class="keyword">defer</span> s.valueLock.Unlock()</span><br><span class="line"></span><br><span class="line">   oldCfg := s.cfg</span><br><span class="line">   newCfg := cfg.Function</span><br><span class="line">   <span class="keyword">var</span> nowVersion <span class="keyword">int32</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// nowVersion == newCfg.Version means Redis has been updated,</span></span><br><span class="line">   <span class="comment">// there is no need to acquire lock again</span></span><br><span class="line">   nowVersion, _ = redisService.GetFunctionVersion()</span><br><span class="line">   <span class="keyword">if</span> nowVersion &lt; newCfg.Version &#123;</span><br><span class="line">      identifier, _ := redisService.DLock(dLockKey)</span><br><span class="line">      nowVersion, _ = redisService.GetFunctionVersion()</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Double check lock</span></span><br><span class="line">      <span class="keyword">if</span> nowVersion &lt; newCfg.Version &#123;</span><br><span class="line">         remainingEnvelope, _ := redisService.GetRemainEnvelopeAmount()</span><br><span class="line">         avg, _ := redisService.GetAvgValue()</span><br><span class="line"></span><br><span class="line">         allocatedEnvelope := oldCfg.Envelope - remainingEnvelope</span><br><span class="line">         allocatedAmount := allocatedEnvelope * avg</span><br><span class="line"></span><br><span class="line">         newRemainingEnvelope := newCfg.Envelope - allocatedEnvelope</span><br><span class="line">         newRemainingAmount := newCfg.Amount - allocatedAmount</span><br><span class="line"></span><br><span class="line">         <span class="keyword">if</span> newRemainingEnvelope &lt;= <span class="number">0</span> || newRemainingAmount &lt;= <span class="number">0</span> &#123;</span><br><span class="line">            <span class="comment">// Allocated red envelopes have exceeded new configuration</span></span><br><span class="line">            _ = redisService.SetRemainEnvelopeAmount(<span class="number">0</span>)</span><br><span class="line">            _ = redisService.SetAvgValue(<span class="number">0</span>)</span><br><span class="line">            log.Warn(<span class="string">&quot;Configuration mismatch: allocated red envelopes have exceeded new configuration.&quot;</span>)</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Update average value for future local cache</span></span><br><span class="line">            newAvg := newRemainingAmount / newRemainingEnvelope</span><br><span class="line">            <span class="keyword">if</span> newAvg &lt; newCfg.Min &#123;</span><br><span class="line">               newAvg = newCfg.Min</span><br><span class="line"></span><br><span class="line">               <span class="comment">// Decrease the number of envelopes to keep the consistency</span></span><br><span class="line">               <span class="comment">// avg * remaining == remaining amount</span></span><br><span class="line">               newRemainingEnvelope = newRemainingAmount / newCfg.Min</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> newAvg &gt; newCfg.Max &#123;</span><br><span class="line">               newAvg = newCfg.Max</span><br><span class="line">            &#125;</span><br><span class="line">            _ = redisService.SetRemainEnvelopeAmount(newRemainingEnvelope)</span><br><span class="line">            _ = redisService.SetAvgValue(newAvg)</span><br><span class="line">            log.Info(fmt.Sprintf(<span class="string">&quot;New configuration loaded, RemainingEnvelopes: %v , Avg: %v\n&quot;</span>, newRemainingEnvelope, newAvg))</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="comment">// Update configuration version in Redis</span></span><br><span class="line">         _ = redisService.SetFunctionVersion(newCfg.Version)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      _, _ = redisService.DUnlock(identifier, dLockKey)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Update local variables</span></span><br><span class="line">   s.updateConfiguration(newCfg)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(s *SnatchService)</span> <span class="title">updateConfiguration</span><span class="params">(cfg config.FunctionConfiguration)</span></span> &#123;</span><br><span class="line">   remainingEnvelope, _ := redisService.GetRemainEnvelopeAmount()</span><br><span class="line">   s.runOut = remainingEnvelope == <span class="number">0</span></span><br><span class="line">   <span class="keyword">if</span> s.runOut &#123;</span><br><span class="line">      <span class="comment">// Invalidate local cache</span></span><br><span class="line">      s.eidOffset = <span class="number">0</span></span><br><span class="line">      s.eidEnd = <span class="number">-1</span></span><br><span class="line">      s.eidStart = <span class="number">0</span></span><br><span class="line">   &#125;</span><br><span class="line">   s.loadConfiguration(cfg)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/08/%E4%B8%80%E6%AC%A1%E9%80%A0%E8%BD%AE%E5%AD%90%E7%9A%84%E5%B0%9D%E8%AF%95/" rel="prev" title="一次造轮子的尝试">
+      <i class="fa fa-chevron-left"></i> 一次造轮子的尝试
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">项目背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">需求说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A2%E5%8C%85%E5%88%86%E9%85%8D%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">红包分配方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%85%8D%E7%BD%AE%E9%A1%B9"><span class="nav-number">2.1.</span> <span class="nav-text">可配置项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">方案实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E6%8A%A2%E7%BA%A2%E5%8C%85%E6%AC%A1%E6%95%B0%E6%A3%80%E6%9F%A5"><span class="nav-number">2.2.1.</span> <span class="nav-text">阶段一：抢红包次数检查</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%8A%A2%E5%88%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">阶段二：判断是否抢到</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9A%E7%BA%A2%E5%8C%85%E9%87%91%E9%A2%9D%E5%88%86%E9%85%8D"><span class="nav-number">2.2.3.</span> <span class="nav-text">阶段三：红包金额分配</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%A2%E5%8C%85id%E7%94%9F%E6%88%90"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">红包id生成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%A6%E9%B2%A4%E7%BA%A2%E5%8C%85%E7%9A%84%E5%88%A4%E5%AE%9A"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">锦鲤红包的判定</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%A2%E5%8C%85%E9%87%91%E9%A2%9D%E7%94%9F%E6%88%90"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">红包金额生成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E5%AF%B9%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0"><span class="nav-number">2.3.</span> <span class="nav-text">应对配置更新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis%E6%9B%B4%E6%96%B0"><span class="nav-number">2.3.1.</span> <span class="nav-text">Redis更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%8F%98%E9%87%8F%E6%9B%B4%E6%96%B0"><span class="nav-number">2.3.2.</span> <span class="nav-text">本地变量更新</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="phantasia"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">phantasia</p>
+  <div class="site-description" itemprop="description">随缘更新的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunxia0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunxia0" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://500px.com.cn/kaleidos" title="500px → https:&#x2F;&#x2F;500px.com.cn&#x2F;kaleidos" rel="noopener" target="_blank"><i class="fab fa-500px fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-code"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">phantasia</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
